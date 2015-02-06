@@ -4,6 +4,44 @@ var StatRow = {
     return this;
   },
 
+   calculateYH: function(perGame) {
+	  var games = 1;
+	  if (perGame) {
+		 var games = this.getGames();
+	  }
+	  var stats = [this.getValue('PTS')/games, this.getValue('AST')/games, this.getValue('STL')/games, this.getValue('BLK')/games, this.getValue('TRB')/games];
+	  var doubles = stats.map(this.checkDouble);						// maps stats to check if there are double figures
+	  var doublesSum = doubles.reduce(function (a,b) { return a + b });	// reduce mapping to a single figure
+	  var TripDoub = 0 ;
+	  if (doublesSum >= 3) {
+		 var TripDoub = 1;
+	  }
+	  var starter = 0;
+	  if (this.getValue('Starters').hasData()) {
+		 var starter = 1;
+	  } else if (this.getValue('GS').hasData()) {
+		 var starter = this.getValue('GS');
+	  }
+	  // The actual formula
+	  return ((starter*5
+			   - this.getValue('FGA')*0.45
+			   + this.getValue('FGM')*1
+			   - this.getValue('FTA')*0.75
+			   + this.getValue('FT')*1
+			   + this.getValue('3P')*2
+			   + this.getValue('PTS')*1
+			   + this.getValue('ORB')*1.9
+			   + this.getValue('DRB')*1.5
+			   + this.getValue('AST')*2
+			   + this.getValue('STL')*2.5
+			   + this.getValue('BLK')*2.5
+			   - this.getValue('TOV')*2
+			   - this.getValue('PF')*1
+			   + this.getValue('PTS')*0.5
+			   + TripDoub*10
+			 )/games).toFixed(2);
+   },
+   
   calculateFD: function(perGame) {
       var games = 1;
       if (perGame) {
@@ -72,13 +110,14 @@ var StatRow = {
 };
 
 $(document).ready(function() {
-  $('#per_minute thead tr, #per_game thead tr, #pgl_basic thead tr, #stats thead tr').append('<th>FD</th><th>DK</th>');
+  $('#per_minute thead tr, #per_game thead tr, #pgl_basic thead tr, #stats thead tr').append('<th>YH</th><th>FD</th><th>DK</th>');
   $('#per_minute tbody tr, #per_minute tfoot tr, #per_game tbody tr, #per_game tfoot tr').each(function(index){
     var $row = $(this);
     var statRow = Object.create(StatRow).initialize($row);
+    var yh = statRow.calculateYH();
     var fd = statRow.calculateFD();
     var dk = statRow.calculateDK();
-    $(this).append("<td>" + fd + "</td>" + "<td>" + dk + "</td>");
+    $(this).append("<td>" + yh + "</td>" + "<td>" + fd + "</td>" + "<td>" + dk + "</td>");
   });
 
   var tableHeading = $('.table_heading h2').text();
@@ -87,34 +126,40 @@ $(document).ready(function() {
     var $row = $(this);
     var perGame = true;
     var statRow = Object.create(StatRow).initialize($row);
+    var yh = statRow.calculateYH(perGame);
     var fd = statRow.calculateFD(perGame);
     var dk = statRow.calculateDK(perGame);
-    $(this).append("<td>" + fd + "</td>" + "<td>" + dk + "</td>");
+    $(this).append("<td>" + yh + "</td>" + "<td>" + fd + "</td>" + "<td>" + dk + "</td>");
   });
+  var yh_vals = []; 
   var fd_vals = []; 
   var dk_vals = [];
   $("#pgl_basic tbody tr").not(".thead").each(function(index){
     var $row = $(this);
     var statRow = Object.create(StatRow).initialize($row);
+    var yh = statRow.calculateYH();
     var fd = statRow.calculateFD();
     var dk = statRow.calculateDK();
+    yh_vals.push(yh);
     fd_vals.push(fd);
     dk_vals.push(dk);
-    $(this).append("<td>" + fd + "</td>" + "<td>" + dk + "</td>");
+    $(this).append("<td>" + yh + "</td>" + "<td>" + fd + "</td>" + "<td>" + dk + "</td>");
   });
+  $("#pgl_basic tbody").append("<tr><td><strong>YH</strong></td><td> Median</td><td>" + StatRow.median(yh_vals) + "</td><td></td><td>Min</td><td>" + Math.min.apply(Math,yh_vals) + "</td><td></td><td>Max</td><td>" + Math.max.apply(Math,yh_vals) + "</td></tr>");
   $("#pgl_basic tbody").append("<tr><td><strong>FD</strong></td><td> Median</td><td>" + StatRow.median(fd_vals) + "</td><td></td><td>Min</td><td>" + Math.min.apply(Math,fd_vals) + "</td><td></td><td>Max</td><td>" + Math.max.apply(Math,fd_vals) + "</td></tr>");
   $("#pgl_basic tbody").append("<tr><td><strong>DK</strong></td><td> Median</td><td>" + StatRow.median(dk_vals) + "</td><td></td><td>Min</td><td>" + Math.min.apply(Math,dk_vals) + "</td><td></td><td>Max</td><td>" + Math.max.apply(Math,dk_vals) + "</td></tr>");
   var url = document.URL;
   if ( url.split('/')[3] == "boxscores" ) {
     $('table').each(function() {
       if ( $(this).attr('id') != undefined && $(this).attr('id').split('_')[1] == "basic" ) {
-        $(this).find('thead tr').not('.over_header').append('<th>FD</th><th>DS</th>');
+        $(this).find('thead tr').not('.over_header').append('<th>YH</th><th>FD</th><th>DS</th>');
         $(this).find('tbody tr, tfoot tr').not('.thead').each(function(index){
           var $row = $(this);
           var statRow = Object.create(StatRow).initialize($row);
+          var yh = statRow.calculateYH();
           var fd = statRow.calculateFD();
           var dk = statRow.calculateDK();
-          $(this).append("<td>" + fd + "</td>" + "<td>" + dk + "</td>");
+          $(this).append("<td>" + yh + "</td>" + "<td>" + fd + "</td>" + "<td>" + dk + "</td>");
       });
     }
   });
