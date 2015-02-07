@@ -17,11 +17,12 @@ var StatRow = {
 		 var TripDoub = 1;
 	  }
 	  var starter = 0;
-	  if (this.getValue('Starters').hasData()) {
+	  if (this.getValue('GS') == 1) {
+		 var starter = this.getValue('GS')/games;
+	  } else if (this.getValue('Starters') !+ ) {
 		 var starter = 1;
-	  } else if (this.getValue('GS').hasData()) {
-		 var starter = this.getValue('GS');
 	  }
+	  console.log( this.getValue('PTS') + ": - ST: " + starter + " TD: " + TripDoub);
 	  // The actual formula
 	  return ((starter*5
 			   - this.getValue('FGA')*0.45
