@@ -132,7 +132,7 @@ var StatRow = {
 };
 
 $(document).ready(function() {
-  $('#per_game thead tr, #pgl_basic thead tr, #stats thead tr').append('<th>YH</th>');
+  $('#per_game thead tr, #pgl_basic thead tr, #stats thead tr').append('<th data-stat="YH_fp" align="right" class="tooltip" tip="Yahoo Fantasy League para chilenos2">YH</th>');
   $('#per_game tbody tr, #per_game tfoot tr').each(function(index){
     var $row = $(this);
     var statRow = Object.create(StatRow).initialize($row);
@@ -217,7 +217,7 @@ $(document).ready(function() {
   if ( url.split('/')[3] == "boxscores" ) {
     $('table').each(function() {
       if ( $(this).attr('id') != undefined && $(this).attr('id').split('_')[1] == "basic" ) {
-        $(this).find('thead tr').not('.over_header').append('<th>YH</th>');
+        $(this).find('thead tr').not('.over_header').append('<th data-stat="YH_fp" align="right" class="tooltip" tip="Yahoo Fantasy League para chilenos2">YH</th>');
         $(this).find('tbody tr, tfoot tr').not('.thead').each(function(index){
           var $row = $(this);
           var statRow = Object.create(StatRow).initialize($row);
