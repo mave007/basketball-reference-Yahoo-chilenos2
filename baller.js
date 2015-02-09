@@ -138,7 +138,7 @@ $(document).ready(function() {
     var statRow = Object.create(StatRow).initialize($row);
     var fd = statRow.calculateYH(3,0);
     //var dk = statRow.calculateDK();
-    $(this).append("<td bgcolor='#FFFF00'>" + fd + "</td>");
+    $(this).append("<td bgcolor='#FFCC00' align='right'>" + fd + "</td>");
   });
 
   var tableHeading = $('.table_heading h2').text();
@@ -163,10 +163,32 @@ $(document).ready(function() {
     //var dk = statRow.calculateDK();
     fd_vals.push(fd);
     //dk_vals.push(dk);
-    $(this).append("<td bgcolor='#FFFF00'>" + fd + "</td>");
+	var color =  "";
+	switch (true) {
+	 case (fd < 7):
+	   color = "#9F5F9F";
+	   break;
+	 case (fd < 14.9):
+	   color = "#FA8072";
+	   break;
+	 case (fd < 19.9):
+	   color = "#FBA16C";
+	   break;
+	 case (fd < 31):
+	   color = "#FFCC00";
+	   break;
+	 case (fd < 40):
+	   color = "#CECC15";
+	   break;
+	 case (fd >= 40):
+	   color = "#99CC32";
+	   break;
+	}
+	 
+    $(this).append("<td bgcolor='" + color + "' align='right'>" + fd + "</td>");
   });
   
-  $("#pgl_basic tbody").append("<tr bgcolor='#00FF00'><td><strong>YH</strong></td><td> Median</td><td>" + StatRow.median(fd_vals) + "</td><td></td><td>Min</td><td>" + Math.min.apply(Math,fd_vals) + "</td><td></td><td>Max</td><td>" + Math.max.apply(Math,fd_vals) + "</td></tr>");
+  $("#pgl_basic tbody").append("<tr bgcolor='#6CA6CD'><td colspan=22></td><td><strong>YH</strong></td><td> Median</td><td><b>" + StatRow.median(fd_vals) + "</b></td><td></td><td>Min</td><td>" + Math.min.apply(Math,fd_vals) + "</td><td></td><td>Max</td><td><b>" + Math.max.apply(Math,fd_vals) + "</b></td></tr>");
   //$("#pgl_basic tbody").append("<tr><td><strong>DK</strong></td><td> Median</td><td>" + StatRow.median(dk_vals) + "</td><td></td><td>Min</td><td>" + Math.min.apply(Math,dk_vals) + "</td><td></td><td>Max</td><td>" + Math.max.apply(Math,dk_vals) + "</td></tr>");
   
   var url = document.URL;
