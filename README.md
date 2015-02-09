@@ -15,6 +15,9 @@ Extension para Google Chrome que agrega columna "YH" en los stats de Jugadores d
   - http://www.basketball-reference.com/boxscores/201502060ATL.html
 - Promedios anuales de un jugador: 
   - http://www.basketball-reference.com/players/j/jordami01.html#per_game::none
+- Promedios temporada 2014-2015 todos los jugadores:
+  - http://www.basketball-reference.com/leagues/NBA_2015_per_game.html
+
 
 ### Known bugs:
 - [x] ~~Resultado inflado por no saber calcular si un jugador es titular o no.~~ FIXED

@@ -3,13 +3,13 @@
 
 "name": "chilenos2 YahooFL - Basketball Reference",
 "description": "Show Yahoo FantasyLeague Points next to Player Stat Tables for #chilenos2",
-"version": "1.1.1",
+"version": "1.1.2",
 "icons": { "128": "chilenos2.png" },
 "author": "GrandWizzard / cero32 Showtime",
 
 "content_scripts": [
 {
-  "matches": ["http://www.basketball-reference.com/players/*", "https://www.basketball-reference.com/players/*", "https://www.basketball-reference.com/teams/*", "http://www.basketball-reference.com/teams/*", "http://www.basketball-reference.com/boxscores/*"],
+  "matches": ["http://www.basketball-reference.com/players/*","https://www.basketball-reference.com/players/*","https://www.basketball-reference.com/teams/*","http://www.basketball-reference.com/teams/*","http://www.basketball-reference.com/boxscores/*","http://www.basketball-reference.com/leagues/*"],
   "js": ["jquery-2.0.3.min.js", "baller.js"]
 }
 ],
