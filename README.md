@@ -4,14 +4,17 @@ Basado en la extension de RotoGrinders BasketballReference.
 Extension para Google Chrome que agrega columna "YH" en los stats de Jugadores del sitio [Basketball-Reference.com](http://www.basketball-reference.com), con un indicador de color estilo heat-map.
 
 ## Modo de instalacion
-* Bajar la ultima version del CRX desde https://github.com/mave007/basketball-reference-Yahoo-chilenos2/blob/master/basketball-reference-Yahoo-chilenos2.crx?raw=true
-* Activar el modo desarrollador o developer en [chrome://extensions](chrome://extensions/)
-* Arrastrar el CRX a esa misma carpeta.
+- Bajar la ultima version del CRX desde https://github.com/mave007/basketball-reference-Yahoo-chilenos2/blob/master/basketball-reference-Yahoo-chilenos2.crx?raw=true
+- Activar el modo desarrollador o developer en [chrome://extensions](chrome://extensions/)
+- Arrastrar el CRX a esa misma carpeta.
 
 ### Ejemplos:
-- GameLog de un jugador en una temporada: http://www.basketball-reference.com/players/w/whiteha01/gamelog/2015/
-- Box Score de un partido: http://www.basketball-reference.com/boxscores/201502060ATL.html
-- Promedios anuales de un jugador: http://www.basketball-reference.com/players/j/jordami01.html#per_game::none
+- GameLog de un jugador en una temporada: 
+-- http://www.basketball-reference.com/players/w/whiteha01/gamelog/2015/#pgl_basic::none
+- Box Score de un partido: 
+-- http://www.basketball-reference.com/boxscores/201502060ATL.html
+- Promedios anuales de un jugador: 
+-- http://www.basketball-reference.com/players/j/jordami01.html#per_game::none
 
 ## Known bugs
 - [x] ~~Resultado inflado por no saber calcular si un jugador es titular o no.~~ FIXED
