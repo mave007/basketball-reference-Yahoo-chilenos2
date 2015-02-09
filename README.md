@@ -28,4 +28,5 @@ Extension para Google Chrome que agrega columna "YH" en los stats de Jugadores d
 
 ## Disclaimer
 Aún en modo beta.
-Agradecimientos a GrandWizzard por los fixes y desarrollo.
+
+Agradecimientos a GM de Grand Wizzard por los fixes y desarrollo.
