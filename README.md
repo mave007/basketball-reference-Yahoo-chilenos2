@@ -23,6 +23,7 @@ Extension para Google Chrome que agrega columna "YH" en los stats de Jugadores d
 - [x] ~~Resultado inflado por no saber calcular si un jugador es titular o no.~~ FIXED
 - [ ] En el game log anual de un jugador, el valor de "median" es un poco menor que el promedio aritmetico. No revisé (y no entendí bien) esa función. Sin embargo, cuando el jugador jugó los 82 partidos del año, ahi coinciden los valores Median y Promedio per game.
 - [ ] En el boxscore de un partido, hay que ignorar el valor en "Team totals", ya que en vez de ser la suma de la columna YH, trata de calcular como si se tratara de un jugador más, y lo ve en el listado de suplentes.
+- [ ] En Per Game de jugadores en una temporada, parece haber 5 puntos extras (ejemplo: http://goo.gl/WLuklH )
 
 ### References:
 - https://rotogrinders.com/pages/rotogrinders-daily-fantasy-browser-extensions-245335
