@@ -6,7 +6,8 @@ Extension para Google Chrome que agrega columna "YH" en los stats de Jugadores d
 ## Modo de instalacion
 * Bajar la ultima version del CRX desde https://github.com/mave007/basketball-reference-Yahoo-chilenos2/blob/master/basketball-reference-Yahoo-chilenos2.crx?raw=true
 * Activar el modo desarrollador o developer en [chrome://extensions](chrome://extensions/)
-* Arrastrar el CRX a esa misma carpeta
+* Arrastrar el CRX a esa misma carpeta.
+
 ### Ejemplos:
 - GameLog de un jugador en una temporada: http://www.basketball-reference.com/players/w/whiteha01/gamelog/2015/
 - Box Score de un partido: http://www.basketball-reference.com/boxscores/201502060ATL.html
