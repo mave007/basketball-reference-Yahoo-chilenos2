@@ -10,11 +10,11 @@ Extension para Google Chrome que agrega columna "YH" en los stats de Jugadores d
 
 ### Ejemplos:
 - GameLog de un jugador en una temporada: 
--- http://www.basketball-reference.com/players/w/whiteha01/gamelog/2015/#pgl_basic::none
+  - http://www.basketball-reference.com/players/w/whiteha01/gamelog/2015/#pgl_basic::none
 - Box Score de un partido: 
--- http://www.basketball-reference.com/boxscores/201502060ATL.html
+  - http://www.basketball-reference.com/boxscores/201502060ATL.html
 - Promedios anuales de un jugador: 
--- http://www.basketball-reference.com/players/j/jordami01.html#per_game::none
+  - http://www.basketball-reference.com/players/j/jordami01.html#per_game::none
 
 ## Known bugs
 - [x] ~~Resultado inflado por no saber calcular si un jugador es titular o no.~~ FIXED
