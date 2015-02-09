@@ -138,7 +138,28 @@ $(document).ready(function() {
     var statRow = Object.create(StatRow).initialize($row);
     var fd = statRow.calculateYH(3,0);
     //var dk = statRow.calculateDK();
-    $(this).append("<td bgcolor='#FFCC00' align='right'>" + fd + "</td>");
+	var color =  "";
+	switch (true) {
+	 case (fd < 7):
+	   color = "#9F5F9F";
+	   break;
+	 case (fd < 14.9):
+	   color = "#FA8072";
+	   break;
+	 case (fd < 19.9):
+	   color = "#FBA16C";
+	   break;
+	 case (fd < 31):
+	   color = "#FFCC00";
+	   break;
+	 case (fd < 40):
+	   color = "#CECC15";
+	   break;
+	 case (fd >= 40):
+	   color = "#99CC32";
+	   break;
+	}	 
+    $(this).append("<td bgcolor='" + color + "' align='right'>" + fd + "</td>");
   });
 
   var tableHeading = $('.table_heading h2').text();
@@ -207,9 +228,30 @@ $(document).ready(function() {
 			indice = 0;
 		  //console.log(player + " " + indice);
           //var dk = statRow.calculateDK();
-          $(this).append("<td bgcolor='#FFFF00'>" + fd + "</td>");
-      });
-    }
-  });
+		   var color =  "";
+		   switch (true) {
+			case (fd < 7):
+			  color = "#9F5F9F";
+			  break;
+			case (fd < 14.9):
+			  color = "#FA8072";
+			  break;
+			case (fd < 19.9):
+			  color = "#FBA16C";
+			  break;
+			case (fd < 31):
+			  color = "#FFCC00";
+			  break;
+			case (fd < 40):
+			  color = "#CECC15";
+			  break;
+			case (fd >= 40):
+			  color = "#99CC32";
+			  break;
+		   }		   
+		   $(this).append("<td bgcolor='" + color + "' align='right'>" + fd + "</td>");
+		});
+	  }
+	});
   }
 });
