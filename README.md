@@ -31,6 +31,9 @@ Extension para Google Chrome que agrega columna "YH" en los stats de Jugadores d
 - http://www.basketball-reference.com
 
 ### Disclaimer:
-Aún en modo beta.
-
 Agradecimientos a GM de Grand Wizzard por los fixes y desarrollo.
+
+### ChangeLog:
+- Version 1.2.0: 20151028 Agregado stats para Projections, cambio de formula a temporada 2015-2016
+- Version 1.1.3: 20150312 Minor fixes, new color scheme
+- Version 1.0.0: 20150219 First version
