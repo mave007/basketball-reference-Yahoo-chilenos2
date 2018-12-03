@@ -3,26 +3,6 @@ var StatRow = {
     this.row = $row;
     return this;
   },
-
-  calculateFD: function(perGame) {
-      var games = 1;
-      if (perGame) {
-        var games = this.getGames();
-      }
-      return ((this.getValue('PTS') + (1.5*this.getValue('AST')) + (2*this.getValue('STL')) + (2*this.getValue('BLK')) - this.getValue('TOV') + (1.2*this.getValue('TRB')))/games).toFixed(2);
-  },
-
-  calculateDK: function(perGame) {
-    var games = 1;
-    if (perGame) {
-      var games = this.getGames();
-    }
-    var stats = [this.getValue('PTS')/games, this.getValue('AST')/games, this.getValue('STL')/games, this.getValue('BLK')/games, this.getValue('TRB')/games];
-    var doubles = stats.map(this.checkDouble);
-    var doublesSum = doubles.reduce(function (a,b) { return a + b });
-    var dkBonus = this.checkBonus(doublesSum);
-    return ((this.getValue('PTS') + (1.5*this.getValue('AST')) + (2*this.getValue('STL')) + (2*this.getValue('BLK')) - (.5*this.getValue('TOV')) + (1.25*this.getValue('TRB')) + (.5*this.getValue('3P')) + dkBonus)/games).toFixed(2);
-  },
   
   calculateYH: function(tipo, indice) {
     var games = 1;
@@ -107,23 +87,11 @@ var StatRow = {
     }
   },
 
-  checkBonus: function (x) {
-    if ( x == 2 ) {
-      return 1.5;
-    }
-    if (x >= 3 ) {
-      return 3;
-    }
-    else {
-      return 0;
-    }
-  },
-
   getIndex: function(category) {
     var selector = "th:contains(" + category + ")";
     var $table = this.row.parent().parent();
     var idx = $table.find('thead tr:not(.over_header)').first().find(selector).index();
-    return idx;
+    return idx-1;
   },
 
   getValue: function(category) {
@@ -204,7 +172,6 @@ $(document).ready(function() {
     var $row = $(this);
     var statRow = Object.create(StatRow).initialize($row);
     var fd = statRow.calculateYH(3,0);
-    //var dk = statRow.calculateDK();
 	var txtcol = "#000000";
 	var tier = statRow.getTier(fd);
 	var bgcol = statRow.getColor(tier);
@@ -213,43 +180,30 @@ $(document).ready(function() {
   });
 
   var tableHeading = $('.table_heading h2').text();
-
-  /*
-  $('#stats tbody tr').each(function(index){
-    var $row = $(this);
-    var perGame = true;
-    var statRow = Object.create(StatRow).initialize($row);
-    var fd = statRow.calculateFD(perGame);
-    var dk = statRow.calculateDK(perGame);
-    $(this).append("<td>" + fd + "</td>" + "<td>" + dk + "</td>");
-  });
-  */
   
   var fd_vals = []; 
-  //var dk_vals = [];
   $("#pgl_basic tbody tr").not(".thead").each(function(index){
     var $row = $(this);
     var statRow = Object.create(StatRow).initialize($row);
-    var fd = statRow.calculateYH(2,0);
-    //var dk = statRow.calculateDK();
-    fd_vals.push(fd);
-    //dk_vals.push(dk);
-	var txtcol = "#000000";
-	var tier = statRow.getTier(fd);
-	var bgcol = statRow.getColor(tier);
-	if (tier > 4) txtcol = "#ffffff";
-    $(this).append("<td bgcolor='" + bgcol + "' align='right' style='color:" + txtcol + ";'>" + fd + "</td>");
+	var gm = statRow.getGames();
+	if (gm > 0) {
+		var fd = statRow.calculateYH(2,0);
+		fd_vals.push(fd);
+		var txtcol = "#000000";
+		var tier = statRow.getTier(fd);
+		var bgcol = statRow.getColor(tier);
+		if (tier > 4) txtcol = "#ffffff";
+		$(this).append("<td bgcolor='" + bgcol + "' align='right' style='color:" + txtcol + ";'>" + fd + "</td>");	
+	}
   });
 
   var yh_vals = []; 
-  //var dk_vals = [];
+
   $("#pgl_basic_playoffs tbody tr").not(".thead").each(function(index){
     var $row = $(this);
     var statRow = Object.create(StatRow).initialize($row);
     var fd = statRow.calculateYH(2,0);
-    //var dk = statRow.calculateDK();
     yh_vals.push(fd);
-    //dk_vals.push(dk);
 	var txtcol = "#000000";
 	var tier = statRow.getTier(fd);
 	var bgcol = statRow.getColor(tier);
@@ -259,7 +213,6 @@ $(document).ready(function() {
   
   $("#pgl_basic tbody").append("<tr bgcolor='#00FF00'><td><strong>YH</strong></td><td> Promedio</td><td>" + StatRow.promedio(fd_vals) + "</td><td></td><td>Min</td><td>" + Math.min.apply(Math,fd_vals) + "</td><td></td><td>Max</td><td>" + Math.max.apply(Math,fd_vals) + "</td></tr>");
   $("#pgl_basic_playoffs tbody").append("<tr bgcolor='#00FF00'><td><strong>YH</strong></td><td> Promedio</td><td>" + StatRow.promedio(yh_vals) + "</td><td></td><td>Min</td><td>" + Math.min.apply(Math,yh_vals) + "</td><td></td><td>Max</td><td>" + Math.max.apply(Math,yh_vals) + "</td></tr>");
-  //$("#pgl_basic tbody").append("<tr><td><strong>DK</strong></td><td> Median</td><td>" + StatRow.median(dk_vals) + "</td><td></td><td>Min</td><td>" + Math.min.apply(Math,dk_vals) + "</td><td></td><td>Max</td><td>" + Math.max.apply(Math,dk_vals) + "</td></tr>");
   
   var url = document.URL;
   var indice = 0;
@@ -276,7 +229,6 @@ $(document).ready(function() {
   		  if (player == "Team Totals")
 			indice = 0;
 		  //console.log(player + " " + indice);
-          //var dk = statRow.calculateDK();
 	var txtcol = "#000000";
 	var tier = statRow.getTier(fd);
 	var bgcol = statRow.getColor(tier);
