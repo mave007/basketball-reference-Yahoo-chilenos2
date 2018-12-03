@@ -171,12 +171,15 @@ $(document).ready(function() {
   $('#per_game tbody tr, #projection tbody tr, #playoffs_per_game tbody tr, #stats_games tbody tr, #per_game tfoot tr, #playoffs_per_game tfoot tr').each(function(index){
     var $row = $(this);
     var statRow = Object.create(StatRow).initialize($row);
-    var fd = statRow.calculateYH(3,0);
-	var txtcol = "#000000";
-	var tier = statRow.getTier(fd);
-	var bgcol = statRow.getColor(tier);
-	if (tier > 4) txtcol = "#ffffff";
-    $(this).append("<td bgcolor='" + bgcol + "' align='right' style='color:" + txtcol + ";'>" + fd + "</td>");
+	var gm = statRow.getGames();
+	if (gm > 0) {
+		var fd = statRow.calculateYH(3,0);
+		var txtcol = "#000000";
+		var tier = statRow.getTier(fd);
+		var bgcol = statRow.getColor(tier);
+		if (tier > 4) txtcol = "#ffffff";
+		$(this).append("<td bgcolor='" + bgcol + "' align='right' style='color:" + txtcol + ";'>" + fd + "</td>");
+	}
   });
 
   var tableHeading = $('.table_heading h2').text();
@@ -202,13 +205,16 @@ $(document).ready(function() {
   $("#pgl_basic_playoffs tbody tr").not(".thead").each(function(index){
     var $row = $(this);
     var statRow = Object.create(StatRow).initialize($row);
-    var fd = statRow.calculateYH(2,0);
-    yh_vals.push(fd);
-	var txtcol = "#000000";
-	var tier = statRow.getTier(fd);
-	var bgcol = statRow.getColor(tier);
-	if (tier > 4) txtcol = "#ffffff";
-    $(this).append("<td bgcolor='" + bgcol + "' align='right' style='color:" + txtcol + ";'>" + fd + "</td>");
+	var gm = statRow.getGames();
+	if (gm > 0) {	
+		var fd = statRow.calculateYH(2,0);
+		yh_vals.push(fd);
+		var txtcol = "#000000";
+		var tier = statRow.getTier(fd);
+		var bgcol = statRow.getColor(tier);
+		if (tier > 4) txtcol = "#ffffff";
+		$(this).append("<td bgcolor='" + bgcol + "' align='right' style='color:" + txtcol + ";'>" + fd + "</td>");
+	}
   });
   
   $("#pgl_basic tbody").append("<tr bgcolor='#00FF00'><td><strong>YH</strong></td><td> Promedio</td><td>" + StatRow.promedio(fd_vals) + "</td><td></td><td>Min</td><td>" + Math.min.apply(Math,fd_vals) + "</td><td></td><td>Max</td><td>" + Math.max.apply(Math,fd_vals) + "</td></tr>");
@@ -218,24 +224,27 @@ $(document).ready(function() {
   var indice = 0;
   if ( url.split('/')[3] == "boxscores" ) {
     $('table').each(function() {
-      if ( $(this).attr('id') != undefined && $(this).attr('id').split('_')[1] == "basic" ) {
-        $(this).find('thead tr').not('.over_header').append('<th data-stat="YH_score" align="right" class="tooltip" tip="Yahoo Fantasy League chilenos2">YH</th>');
-        $(this).find('tbody tr, tfoot tr').not('.thead').each(function(index){
-          var $row = $(this);
-          var statRow = Object.create(StatRow).initialize($row);
-		  indice = indice + 1;
-		  var player = statRow.getPlayer('Starters');		  
-          var fd = statRow.calculateYH(1,indice);		  
-  		  if (player == "Team Totals")
-			indice = 0;
-		  //console.log(player + " " + indice);
-	var txtcol = "#000000";
-	var tier = statRow.getTier(fd);
-	var bgcol = statRow.getColor(tier);
-	if (tier > 4) txtcol = "#ffffff";
-    $(this).append("<td bgcolor='" + bgcol + "' align='right' style='color:" + txtcol + ";'>" + fd + "</td>");
-      });
-    }
-  });
+		if ( $(this).attr('id') != undefined && $(this).attr('id').split('_')[1] == "basic" ) {
+			$(this).find('thead tr').not('.over_header').append('<th data-stat="YH_score" align="right" class="tooltip" tip="Yahoo Fantasy League chilenos2">YH</th>');
+			$(this).find('tbody tr, tfoot tr').not('.thead').each(function(index){
+				var $row = $(this);
+				var statRow = Object.create(StatRow).initialize($row);
+				var gm = statRow.getGames();
+				if (gm > 0) {
+					indice = indice + 1;
+					var player = statRow.getPlayer('Starters');		  
+					var fd = statRow.calculateYH(1,indice);		  
+					if (player == "Team Totals")
+					indice = 0;
+					//console.log(player + " " + indice);
+					var txtcol = "#000000";
+					var tier = statRow.getTier(fd);
+					var bgcol = statRow.getColor(tier);
+					if (tier > 4) txtcol = "#ffffff";
+					$(this).append("<td bgcolor='" + bgcol + "' align='right' style='color:" + txtcol + ";'>" + fd + "</td>");
+				}	
+			});
+		}
+	});
   }
 });
