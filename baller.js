@@ -58,21 +58,21 @@ var StatRow = {
 	  TripDub = 1;
 	}
 
-	  return ((  (starter*5)
+	  return ((  (starter*3)
 			   - (this.getValue('FGA')*0.45)
 			   + (this.getValue('FG')*1)
 			   - (this.getValue('FTA')*0.75)
 			   + (this.getValue('FT')*1)
 			   + (this.getValue('3P')*2)
+			   - (this.getValue('3PA')*0.75)
 			   + (this.getValue('PTS')*0.5)
-			   + (this.getValue('ORB')*1.9)
+			   + (this.getValue('ORB')*1.7)
 			   + (this.getValue('DRB')*1.5)
 			   + (this.getValue('AST')*2)
 			   + (this.getValue('STL')*2.5)
 			   + (this.getValue('BLK')*2.5)
 			   - (this.getValue('TOV')*2)
-			   - (this.getValue('PF')*1)
-			   + (TripDub*10))/games).toFixed(2);	
+			   + (TripDub*3))/games).toFixed(2);	
 	
   },
 
@@ -199,8 +199,8 @@ var StatRow = {
 };
 
 $(document).ready(function() {
-  $('#per_game thead tr, #playoffs_per_game thead tr, #pgl_basic thead tr, #pgl_basic_playoffs thead tr, #stats thead tr').append('<th>YH</th>');
-  $('#per_game tbody tr, #playoffs_per_game tbody tr, #per_game tfoot tr, #playoffs_per_game tfoot tr').each(function(index){
+  $('#per_game thead tr, #projection thead tr, #playoffs_per_game thead tr, #stats_games thead tr, #pgl_basic thead tr, #pgl_basic_playoffs thead tr, #stats thead tr').append('<th data-stat="YH_score" align="right" class="tooltip" tip="Yahoo Fantasy League chilenos2">YH</th>');
+  $('#per_game tbody tr, #projection tbody tr, #playoffs_per_game tbody tr, #stats_games tbody tr, #per_game tfoot tr, #playoffs_per_game tfoot tr').each(function(index){
     var $row = $(this);
     var statRow = Object.create(StatRow).initialize($row);
     var fd = statRow.calculateYH(3,0);
@@ -266,7 +266,7 @@ $(document).ready(function() {
   if ( url.split('/')[3] == "boxscores" ) {
     $('table').each(function() {
       if ( $(this).attr('id') != undefined && $(this).attr('id').split('_')[1] == "basic" ) {
-        $(this).find('thead tr').not('.over_header').append('<th>YH</th>');
+        $(this).find('thead tr').not('.over_header').append('<th data-stat="YH_score" align="right" class="tooltip" tip="Yahoo Fantasy League chilenos2">YH</th>');
         $(this).find('tbody tr, tfoot tr').not('.thead').each(function(index){
           var $row = $(this);
           var statRow = Object.create(StatRow).initialize($row);
