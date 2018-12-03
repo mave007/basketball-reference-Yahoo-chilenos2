@@ -58,7 +58,7 @@ var StatRow = {
 	  TripDub = 1;
 	}
 
-	  return ((  (starter*5)
+	  return ((  (starter*3)
 			   - (this.getValue('FGA')*0.45)
 			   + (this.getValue('FG')*1)
 			   - (this.getValue('FTA')*0.75)
@@ -72,7 +72,7 @@ var StatRow = {
 			   + (this.getValue('STL')*2.5)
 			   + (this.getValue('BLK')*2.5)
 			   - (this.getValue('TOV')*2)
-			   + (TripDub*10))/games).toFixed(2);	
+			   + (TripDub*3))/games).toFixed(2);	
 	
   },
 
