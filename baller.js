@@ -12,7 +12,6 @@ var StatRow = {
 
     if (tipo == 1) {
       //var games = this.getGames();
-
 	  //BOXSCORE: verifica si jugador está en listado de Starters:	
 	  if (indice < 6)
 		starter = 1;
@@ -30,15 +29,28 @@ var StatRow = {
 	  //per-games:
 	  starter = started/totgames;	
 	}
-    var stats = [this.getValue('PTS')/games, this.getValue('AST')/games, this.getValue('STL')/games, this.getValue('BLK')/games, this.getValue('TRB')/games];
-    var doubles = stats.map(this.checkDouble);
-    var doublesSum = doubles.reduce(function (a,b) { return a + b;});
-	var TripDub = 0 ;
-	if (doublesSum >= 3) {
-	  TripDub = 1;
+	
+	// Tratemos de hacer para Totals
+	if ( tipo == 4) {
+    	var stats = [this.getValue('PTS'), this.getValue('AST'), this.getValue('STL'), this.getValue('BLK'), this.getValue('TRB')];
+    	var doubles = stats.map(this.checkDouble);
+    	var doublesSum = doubles.reduce(function (a,b) { return a + b;});
+		var TripDub = 0 ;
+		if (doublesSum >= 3) {
+	  		TripDub = 1;
+		}
 	}
-
-	  return ((  (starter*3)
+	else {
+    	var stats = [this.getValue('PTS')/games, this.getValue('AST')/games, this.getValue('STL')/games, this.getValue('BLK')/games, this.getValue('TRB')/games];
+    	var doubles = stats.map(this.checkDouble);
+    	var doublesSum = doubles.reduce(function (a,b) { return a + b;});
+		var TripDub = 0 ;
+		if (doublesSum >= 3) {
+	  		TripDub = 1;
+		}
+	}
+	 
+	return ((  (starter*1)
 			   - (this.getValue('FGA')*0.45)
 			   + (this.getValue('FG')*1)
 			   - (this.getValue('FTA')*0.75)
@@ -60,6 +72,10 @@ var StatRow = {
     return this.getValue('G');
   },
   
+  getMinutes: function() {
+	return this.getValue('MP');
+  },
+   
   getStartedGames: function() {
     return this.getValue('GS');
   },  
@@ -102,9 +118,10 @@ var StatRow = {
     return this.row.find('td').eq(this.getIndex(category)).text();
   },
   
-  getTier: function(valor) {
+  getTier: function(valor,total) {
 	var tier = 0;
-		   switch (true) {
+	if (total == 0) {
+		switch (true) {
 			case (valor < 10):
 			  tier = 1;
 			  break;
@@ -128,8 +145,37 @@ var StatRow = {
 			  break;
 			case (valor >= 60):
 			  tier = 8;
-			  break;			  
-		   }	 
+			  break;
+		   }
+	}
+	else {
+		switch (true) {
+			case (valor < 1000):
+			  tier = 1;
+			  break;
+			case (valor < 1400):
+			  tier = 2;
+			  break;
+			case (valor < 1700):
+			  tier = 3;
+			  break;
+			case (valor < 2200):
+			  tier = 4;
+			  break;
+			case (valor < 2500):
+			  tier = 5;
+			  break;
+			case (valor < 2800):
+			  tier = 6;
+			  break;
+			case (valor < 3000):
+			  tier = 7;
+			  break;
+			case (valor >= 3000):
+			  tier = 8;
+			  break;
+		   }
+	}		  
 	return tier;	
   },
   
@@ -167,15 +213,23 @@ var StatRow = {
 };
 
 $(document).ready(function() {
-  $('#per_game thead tr, #projection thead tr, #playoffs_per_game thead tr, #stats_games thead tr, #pgl_basic thead tr, #pgl_basic_playoffs thead tr, #stats thead tr').append('<th data-stat="YH_score" align="right" class="tooltip" tip="Yahoo Fantasy League chilenos2">YH</th>');
-  $('#per_game tbody tr, #projection tbody tr, #playoffs_per_game tbody tr, #stats_games tbody tr, #per_game tfoot tr, #playoffs_per_game tfoot tr').each(function(index){
+  $('#totals_stats thead tr, #per_game thead tr, #per_game_stats thead tr, #projection thead tr, #playoffs_per_game thead tr, #stats_games thead tr, #pgl_basic thead tr, #pgl_basic_playoffs thead tr, #stats thead tr').append('<th data-stat="YH_score" align="right" class="tooltip" tip="Yahoo Fantasy League chilenos2">YH</th>');
+  $('#totals_stats tbody tr, #per_game tbody tr, #per_game_stats tbody tr, #projection tbody tr, #playoffs_per_game tbody tr, #stats_games tbody tr, #per_game tfoot tr, #playoffs_per_game tfoot tr').each(function(index){
     var $row = $(this);
     var statRow = Object.create(StatRow).initialize($row);
 	var gm = statRow.getGames();
 	if (gm > 0) {
-		var fd = statRow.calculateYH(3,0);
+	    // Caso para calcular totales
+		if ( statRow.getMinutes() > 100) {
+		    var fd = statRow.calculateYH(4,0);
+			var tier = statRow.getTier(fd,1);
+		}
+	    // Caso para calcular per game	   
+	    else {
+		    var fd = statRow.calculateYH(3,0);
+			var tier = statRow.getTier(fd,0);
+		}
 		var txtcol = "#000000";
-		var tier = statRow.getTier(fd);
 		var bgcol = statRow.getColor(tier);
 		if (tier > 4) txtcol = "#ffffff";
 		$(this).append("<td bgcolor='" + bgcol + "' align='right' style='color:" + txtcol + ";'>" + fd + "</td>");
