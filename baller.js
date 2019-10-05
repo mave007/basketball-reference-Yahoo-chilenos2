@@ -118,9 +118,9 @@ var StatRow = {
     return this.row.find('td').eq(this.getIndex(category)).text();
   },
   
-  getTier: function(valor,total) {
+  getTier: function(valor,totalstats) {
 	var tier = 0;
-	if (total == 0) {
+	if (totalstats == 0) {
 		switch (true) {
 			case (valor < 10):
 			  tier = 1;
@@ -148,7 +148,7 @@ var StatRow = {
 			  break;
 		   }
 	}
-	else {
+	else if (totalstats == 1) {
 		switch (true) {
 			case (valor < 1000):
 			  tier = 1;
@@ -245,9 +245,16 @@ $(document).ready(function() {
 	var gm = statRow.getGames();
 	if (gm > 0) {
 		var fd = statRow.calculateYH(2,0);
+	    // Caso para calcular totales
+		if ( statRow.getMinutes() > 100) {
+			var tier = statRow.getTier(fd,1);
+		}
+	    // Caso para calcular per game	   
+	    else {
+			var tier = statRow.getTier(fd,0);
+		}
 		fd_vals.push(fd);
 		var txtcol = "#000000";
-		var tier = statRow.getTier(fd);
 		var bgcol = statRow.getColor(tier);
 		if (tier > 4) txtcol = "#ffffff";
 		$(this).append("<td bgcolor='" + bgcol + "' align='right' style='color:" + txtcol + ";'>" + fd + "</td>");	
@@ -264,7 +271,14 @@ $(document).ready(function() {
 		var fd = statRow.calculateYH(2,0);
 		yh_vals.push(fd);
 		var txtcol = "#000000";
-		var tier = statRow.getTier(fd);
+	    // Caso para calcular totales
+		if ( statRow.getMinutes() > 100) {
+			var tier = statRow.getTier(fd,1);
+		}
+	    // Caso para calcular per game	   
+	    else {
+			var tier = statRow.getTier(fd,0);
+		}
 		var bgcol = statRow.getColor(tier);
 		if (tier > 4) txtcol = "#ffffff";
 		$(this).append("<td bgcolor='" + bgcol + "' align='right' style='color:" + txtcol + ";'>" + fd + "</td>");
@@ -292,7 +306,14 @@ $(document).ready(function() {
 					indice = 0;
 					//console.log(player + " " + indice);
 					var txtcol = "#000000";
-					var tier = statRow.getTier(fd);
+				    // Caso para calcular totales
+					if ( statRow.getMinutes() > 100) {
+						var tier = statRow.getTier(fd,1);
+					}
+				    // Caso para calcular per game	   
+				    else {
+						var tier = statRow.getTier(fd,0);
+					}
 					var bgcol = statRow.getColor(tier);
 					if (tier > 4) txtcol = "#ffffff";
 					$(this).append("<td bgcolor='" + bgcol + "' align='right' style='color:" + txtcol + ";'>" + fd + "</td>");
