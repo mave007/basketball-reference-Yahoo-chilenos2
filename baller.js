@@ -49,23 +49,23 @@ var StatRow = {
 	  		TripDub = 1;
 		}
 	}
-
+	
+	// https://basketball.fantasysports.yahoo.com/nba/2170/settings
 	return ((  (starter*1)
-			   - (this.getValue('FGA')*0.45)
-			   + (this.getValue('FG')*1)
-			   - (this.getValue('FTA')*0.75)
-			   + (this.getValue('FT')*1)
-			   + (this.getValue('3P')*2)
-			   - (this.getValue('3PA')*0.75)
-			   + (this.getValue('PTS')*0.5)
-			   + (this.getValue('ORB')*1.7)
-			   + (this.getValue('DRB')*1.5)
-			   + (this.getValue('AST')*2)
-			   + (this.getValue('STL')*2.5)
-			   + (this.getValue('BLK')*2.5)
-			   - (this.getValue('TOV')*2)
+			   - (this.getValue('FGA') * 0.45 )
+			   + (this.getValue('FG')  * 1 )
+			   - (this.getValue('FTA') * 0.75 )
+			   + (this.getValue('FT')  * 1 )
+			   + (this.getValue('3P')  * 2 )
+			   - (this.getValue('3PA') * 0.75 )
+			   + (this.getValue('PTS') * 0.5 )
+			   + (this.getValue('ORB') * 1.7 )
+			   + (this.getValue('DRB') * 1.5 )
+			   + (this.getValue('AST') * 2 )
+			   + (this.getValue('STL') * 2.5 )
+			   + (this.getValue('BLK') * 2.5 )
+			   - (this.getValue('TOV') * 2 )
 			   + (TripDub*3))/games).toFixed(2);
-
   },
 
   getGames: function() {
@@ -122,70 +122,30 @@ var StatRow = {
 	var tier = 0;
 	if (totalstats == 0) {
 		switch (true) {
-			case (valor < 12):
-			  tier = 1;
-			  break;
-			case (valor < 16):
-			  tier = 2;
-			  break;
-			case (valor < 20):
-			  tier = 3;
-			  break;
-			case (valor < 23):
-			  tier = 4;
-			  break;
-			case (valor < 27):
-			  tier = 5;
-			  break;
-			case (valor < 31):
-			  tier = 6;
-			  break;
-			case (valor < 36):
-			  tier = 7;
-			  break;
-			case (valor < 40):
-			  tier = 8;
-			  break;
-			case (valor < 45):
-			  tier = 9;
-			  break;
-			case (valor >= 45):
-			  tier = 10;
-			  break;
+			case (valor < 12):  tier = 1;  break;
+			case (valor < 16):  tier = 2;  break;
+			case (valor < 20):  tier = 3;  break;
+			case (valor < 23):  tier = 4;  break;
+			case (valor < 27):  tier = 5;  break;
+			case (valor < 31):  tier = 6;  break;
+			case (valor < 36):  tier = 7;  break;
+			case (valor < 40):  tier = 8;  break;
+			case (valor < 45):  tier = 9;  break;
+			case (valor >= 45): tier = 10; break;
 		   }
 	}
-	else if (totalstats == 1) {
+	else { // if (totalstats == 1) {
 		switch (true) {
-			case (valor < 1000):
-			  tier = 1;
-			  break;
-			case (valor < 1200):
-			  tier = 2;
-			  break;
-			case (valor < 1500):
-			  tier = 3;
-			  break;
-			case (valor < 1800):
-			  tier = 4;
-			  break;
-			case (valor < 2100):
-			  tier = 5;
-			  break;
-			case (valor < 2400):
-			  tier = 6;
-			  break;
-			case (valor < 2700):
-			  tier = 7;
-			  break;
-			case (valor < 3000):
-			  tier = 8;
-			  break;
-			case (valor < 3200):
-			  tier = 9;
-			  break;
-			case (valor >= 3200):
-			  tier = 10;
-			  break;
+			case (valor < 1000):  tier = 1;  break;
+			case (valor < 1200):  tier = 2;  break;
+			case (valor < 1500):  tier = 3;  break;
+			case (valor < 1800):  tier = 4;  break;
+			case (valor < 2100):  tier = 5;  break;
+			case (valor < 2400):  tier = 6;  break;
+			case (valor < 2700):  tier = 7;  break;
+			case (valor < 3000):  tier = 8;  break;
+			case (valor < 3200):  tier = 9;  break;
+			case (valor >= 3200): tier = 10; break;
 		   }
 	}
 	return tier;
@@ -193,40 +153,20 @@ var StatRow = {
 
   // http://colorbrewer2.org/#type=diverging&scheme=RdYlBu&n=11 Diverging 11 steps colorblind safe.
   getColor: function(tier) {
-	    var color = "#313695";
-		   switch (true) {
-			case (tier == 1):
-			  color = "#4575b4";
-			  break;
-			case (tier == 2):
-			  color = "#74add1";
-			  break;
-			case (tier == 3):
-			  color = "#abd9e9";
-			  break;
-			case (tier == 4):
-			  color = "#e0f3f8";
-			  break;
-			case (tier == 5):
-			  color = "#ffffbf";
-			  break;
-			case (tier == 6):
-			  color = "#fee090";
-			  break;
-			case (tier == 7):
-			  color = "#fdae61";
-			  break;
-			case (tier == 8):
-			  color = "#f46d43";
-			  break;
-			case (tier == 9):
-			  color = "#d73027";
-			  break;
-			case (tier == 10):
-			  color = "#a50026";
-			  break;
-		   }
-		return color;
+	var color = "#313695";
+	switch (true) {
+		case (tier == 1):  color = "#4575b4"; break;
+		case (tier == 2):  color = "#74add1"; break;
+		case (tier == 3):  color = "#abd9e9"; break;
+		case (tier == 4):  color = "#e0f3f8"; break;
+		case (tier == 5):  color = "#ffffbf"; break;
+		case (tier == 6):  color = "#fee090"; break;
+		case (tier == 7):  color = "#fdae61"; break;
+		case (tier == 8):  color = "#f46d43"; break;
+		case (tier == 9):  color = "#d73027"; break;
+		case (tier == 10): color = "#a50026"; break;
+   }
+	return color;
   }
 
 };
@@ -275,7 +215,7 @@ $(document).ready(function() {
 		fd_vals.push(fd);
 		var txtcol = "#000000";
 		var bgcol = statRow.getColor(tier);
-		if (tier > 4) txtcol = "#ffffff";
+		if (tier > 6) txtcol = "#ffffff";
 		$(this).append("<td bgcolor='" + bgcol + "' align='right' style='color:" + txtcol + ";'>" + fd + "</td>");
 	}
   });
