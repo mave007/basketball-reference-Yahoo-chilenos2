@@ -1,12 +1,18 @@
-## Extensión para Chrome Basketball-Reference para Liga chilenos2 en Yahoo
+## Extensión para Chrome y Firefox de sitios Basketball-Reference y StatHead para Liga chilenos2 en Yahoo
 
 Basado en la extension de RotoGrinders BasketballReference.
-Extension para Google Chrome que agrega columna "YH" en los stats de Jugadores del sitio [Basketball-Reference.com](http://www.basketball-reference.com), con un indicador de color estilo heat-map.
+Extension para Google Chrome y Mozilla Firefox que agrega columna "YH" en los stats de Jugadores del sitio [Basketball-Reference.com](http://www.basketball-reference.com) 
+y [StatHead](https://stathead.com/basketball) con un indicador de color estilo heat-map.
 
 ### Modo de instalación:
 - Bajar la ultima version del CRX desde https://github.com/mave007/basketball-reference-Yahoo-chilenos2/blob/master/basketball-reference-Yahoo-chilenos2.crx?raw=true
-- Activar el modo developer en [chrome://extensions](chrome://extensions/)
-- Arrastrar el CRX a esa misma carpeta.
+- Si usas Google Chrome:
+  - Activar el modo developer en [chrome://extensions](chrome://extensions/)
+  - Arrastrar el `CRX` a esa misma carpeta.
+- Si usas Mozilla Firefox:
+  - Abrir `about:debugging#/runtime/this-firefox` 
+  - Click en "Load Temporary Add-on..."
+  - Instalar el `CRX` 
 
 #### Ejemplos:
 - GameLog de un jugador en una temporada: 
@@ -31,9 +37,10 @@ Extension para Google Chrome que agrega columna "YH" en los stats de Jugadores d
 - http://www.basketball-reference.com
 
 ### Disclaimer:
-Agradecimientos a GM de Grand Wizzard por los fixes y desarrollo.
+Agradecimientos a los fantasy GM de Grand Wizzard y cero32 por desarrollo y patches
 
 ### ChangeLog:
+- Version 1.5.0: 20210304 Añadiendo soporte para STATHEAD e instrucciones para Firefox
 - Version 1.4.1: 20191219 Ajustando HeatMap de colores
 - Version 1.4.0: 20191203 Version 2019-20
 - Version 1.2.0: 20151028 Agregado stats para Projections, cambio de formula a temporada 2015-2016

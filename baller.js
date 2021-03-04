@@ -172,7 +172,7 @@ var StatRow = {
 };
 
 $(document).ready(function() {
-  $('#playoffs_totals thead tr, #totals thead tr, #totals_stats thead tr, #per_game thead tr, #per_game_stats thead tr, #projection thead tr, #playoffs_per_game thead tr, #stats_games thead tr, #pgl_basic thead tr, #pgl_basic_playoffs thead tr, #stats thead tr').append('<th data-stat="YH_score" align="center" class="tooltip" tip="Yahoo Fantasy League chilenos2">YH</th>');
+  $('#stats thead tr, #playoffs_totals thead tr, #totals thead tr, #totals_stats thead tr, #per_game thead tr, #per_game_stats thead tr, #projection thead tr, #playoffs_per_game thead tr, #stats_games thead tr, #pgl_basic thead tr, #pgl_basic_playoffs thead tr, #stats thead tr').append('<th data-stat="YH_score" align="center" class="tooltip" tip="Yahoo Fantasy League chilenos2">YH</th>');
   $('#playoffs_totals tbody tr, #totals tbody tr, #totals_stats tbody tr, #per_game tbody tr, #per_game_stats tbody tr, #projection tbody tr, #playoffs_per_game tbody tr, #stats_games tbody tr, #per_game tfoot tr, #playoffs_per_game tfoot tr').each(function(index){
     var $row = $(this);
     var statRow = Object.create(StatRow).initialize($row);
