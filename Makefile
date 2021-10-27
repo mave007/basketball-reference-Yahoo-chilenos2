@@ -1,10 +1,10 @@
 # gem install crxmake
 #
 
-baller.js:
+basketball-reference-Yahoo-chilenos2.crx: baller.js
 	crxmake  --pack-extension-key=../basketball-reference-Yahoo-chilenos2.pem --mode crx --pack-extension=.
 
-all: baller.js
+all: basketball-reference-Yahoo-chilenos2.crx
 
 clean:
-	rm -f *~
+	rm -f *~ basketball-reference-Yahoo-chilenos2.crx
