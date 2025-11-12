@@ -53,6 +53,7 @@ Ver [BUILD_GUIDE.md](BUILD_GUIDE.md) para instrucciones completas de construcci√
 Agradecimientos a los fantasy GM de Grand Wizzard y cero32 por desarrollo y patches
 
 ### ChangeLog:
+- Version 2.0.5: 20251112 Fixed game log starter detection - Now correctly handles Basketball-Reference's format change where started games show "*" instead of "1"
 - Version 2.0.4: 20251112 Fixed double-counting starter bonus in Totals - Both Per-game and Totals tables now correctly have NO starter bonus (bonus only applied at individual game level in game logs and box scores)
 - Version 2.0.3: 20251112 Fixed starter bonus bug - Per-game tables now correctly have NO starter bonus, fixed game log starter detection
 - Version 2.0.2: 20251112 Fixed critical column indexing bug - getValue/getText now correctly query both th and td elements to match header structure, added support for reading actual triple-double counts from Totals table

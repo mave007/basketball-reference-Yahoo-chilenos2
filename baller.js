@@ -273,7 +273,9 @@ class StatRow {
 
         case CALC_TYPE.PLAYER_GAMELOG:
           // In game logs, check if player started that specific game
-          starter = isNaN(startedGames) || startedGames === 0 ? 0 : 1;
+          // Basketball-Reference now shows "*" for started games instead of "1"
+          const gsText = this.getText('GS');
+          starter = (gsText === '*' || startedGames === 1) ? 1 : 0;
           break;
 
         case CALC_TYPE.PER_GAME:
