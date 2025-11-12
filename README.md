@@ -53,6 +53,7 @@ Ver [BUILD_GUIDE.md](BUILD_GUIDE.md) para instrucciones completas de construcciÃ
 Agradecimientos a los fantasy GM de Grand Wizzard y cero32 por desarrollo y patches
 
 ### ChangeLog:
+- Version 2.0.12: 20251112 **CODE REFACTOR** - Consolidated tier system into single TIER_CONFIG table - All tier thresholds (per-game/totals), background colors, and text colors now defined in one easy-to-edit structure (lines 56-89) - Replaced separate TIER_THRESHOLDS, TIER_COLORS arrays and getTextColor() logic with unified configuration - Much easier to maintain and visualize tier settings
 - Version 2.0.11: 20251112 **UI IMPROVEMENT** - Improved text legibility for dark tier colors - White text now used for darkest blue backgrounds (tiers 0-1) in addition to red/orange backgrounds (tiers 7-10) - Better contrast for low-scoring performances
 - Version 2.0.10: 20251112 **BACKWARD COMPATIBILITY FIX** - Added support for new playoffs table ID 'player_game_log_post' (Basketball-Reference deprecated 'player_game_log_playoffs') - Extension now supports both old and new playoff table naming conventions
 - Version 2.0.9: 20251112 **CRITICAL FIX** - Fixed minutes parsing for game logs - MP stored as time string "MM:SS" not number - Updated getMinutes() to parse time format (e.g., "29:06" â†’ 29.1 minutes) - NOW GAME LOGS ACTUALLY WORK!

@@ -39,16 +39,53 @@ const SCORING_CONFIG = {
 // Default to current season
 const CURRENT_SEASON = '2024-25';
 
-// Color tiers using ColorBrewer diverging scheme (colorblind-safe)
+// ============================================================================
+// Tier Configuration - Color scheme and thresholds
+// ============================================================================
+// Using ColorBrewer diverging scheme (colorblind-safe)
 // http://colorbrewer2.org/#type=diverging&scheme=RdYlBu&n=11
-const TIER_THRESHOLDS = {
-  perGame: [0, 12, 16, 20, 23, 27, 31, 36, 40, 45, Infinity],
-  totals: [0, 1000, 1200, 1500, 1800, 2100, 2400, 2700, 3000, 3200, Infinity]
-};
+//
+// Edit this table to adjust thresholds and colors for each tier.
+// Each tier defines:
+// - minPerGame/maxPerGame: YH score range for per-game stats (game logs, box scores)
+// - minTotals/maxTotals: YH score range for season totals
+// - bgColor: Background color (hex)
+// - textColor: Text color (hex) - use white for dark backgrounds, black for light
+// ============================================================================
 
-const TIER_COLORS = [
-  '#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8',
-  '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'
+const TIER_CONFIG = [
+  // Tier 0: Lowest scores - Darkest blue
+  { minPerGame: 0,  maxPerGame: 12,  minTotals: 0,    maxTotals: 1000, bgColor: '#313695', textColor: '#ffffff' },
+
+  // Tier 1: Very low - Dark blue
+  { minPerGame: 12, maxPerGame: 16,  minTotals: 1000, maxTotals: 1200, bgColor: '#4575b4', textColor: '#ffffff' },
+
+  // Tier 2: Low - Medium blue
+  { minPerGame: 16, maxPerGame: 20,  minTotals: 1200, maxTotals: 1500, bgColor: '#74add1', textColor: '#000000' },
+
+  // Tier 3: Below average - Light blue
+  { minPerGame: 20, maxPerGame: 23,  minTotals: 1500, maxTotals: 1800, bgColor: '#abd9e9', textColor: '#000000' },
+
+  // Tier 4: Below average - Very light blue
+  { minPerGame: 23, maxPerGame: 27,  minTotals: 1800, maxTotals: 2100, bgColor: '#e0f3f8', textColor: '#000000' },
+
+  // Tier 5: Average - Light yellow (neutral)
+  { minPerGame: 27, maxPerGame: 31,  minTotals: 2100, maxTotals: 2400, bgColor: '#ffffbf', textColor: '#000000' },
+
+  // Tier 6: Above average - Light orange
+  { minPerGame: 31, maxPerGame: 36,  minTotals: 2400, maxTotals: 2700, bgColor: '#fee090', textColor: '#000000' },
+
+  // Tier 7: Good - Orange
+  { minPerGame: 36, maxPerGame: 40,  minTotals: 2700, maxTotals: 3000, bgColor: '#fdae61', textColor: '#ffffff' },
+
+  // Tier 8: Very good - Dark orange
+  { minPerGame: 40, maxPerGame: 45,  minTotals: 3000, maxTotals: 3200, bgColor: '#f46d43', textColor: '#ffffff' },
+
+  // Tier 9: Excellent - Red
+  { minPerGame: 45, maxPerGame: 50,  minTotals: 3200, maxTotals: 3500, bgColor: '#d73027', textColor: '#ffffff' },
+
+  // Tier 10: Elite - Darkest red
+  { minPerGame: 50, maxPerGame: Infinity, minTotals: 3500, maxTotals: Infinity, bgColor: '#a50026', textColor: '#ffffff' }
 ];
 
 // Table selectors for different page types
@@ -108,32 +145,40 @@ const isDouble = (stat) => stat >= 10;
  * Determine tier based on score value
  */
 const getTier = (value, tierType = TIER_TYPE.PER_GAME) => {
-  const thresholds = tierType === TIER_TYPE.TOTALS
-    ? TIER_THRESHOLDS.totals
-    : TIER_THRESHOLDS.perGame;
+  const isPerGame = tierType === TIER_TYPE.PER_GAME;
 
-  for (let i = 0; i < thresholds.length - 1; i++) {
-    if (value >= thresholds[i] && value < thresholds[i + 1]) {
+  for (let i = 0; i < TIER_CONFIG.length; i++) {
+    const tier = TIER_CONFIG[i];
+    const min = isPerGame ? tier.minPerGame : tier.minTotals;
+    const max = isPerGame ? tier.maxPerGame : tier.maxTotals;
+
+    if (value >= min && value < max) {
       return i;
     }
   }
-  return 0;
+
+  // Default to highest tier if value exceeds all thresholds
+  return TIER_CONFIG.length - 1;
 };
 
 /**
- * Get color for tier
+ * Get background color for tier
  */
 const getColorForTier = (tier) => {
-  return TIER_COLORS[tier] || TIER_COLORS[0];
+  if (tier >= 0 && tier < TIER_CONFIG.length) {
+    return TIER_CONFIG[tier].bgColor;
+  }
+  return TIER_CONFIG[0].bgColor; // Default to first tier
 };
 
 /**
- * Get text color based on background tier
- * Use white text for dark backgrounds (darkest blues and reds)
+ * Get text color for tier
  */
 const getTextColor = (tier) => {
-  // White text for darkest blues (tier 0-1) and reds/oranges (tier > 6)
-  return (tier <= 1 || tier > 6) ? '#ffffff' : '#000000';
+  if (tier >= 0 && tier < TIER_CONFIG.length) {
+    return TIER_CONFIG[tier].textColor;
+  }
+  return TIER_CONFIG[0].textColor; // Default to first tier
 };
 
 // ============================================================================
