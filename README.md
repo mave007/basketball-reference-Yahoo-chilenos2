@@ -1,8 +1,15 @@
 ## Extensión para Chrome y Firefox de sitios Basketball-Reference y StatHead para Liga chilenos2 en Yahoo
 
-Basado en la extension de RotoGrinders BasketballReference.
-Extension para Google Chrome y Mozilla Firefox que agrega columna "YH" en los stats de Jugadores del sitio [Basketball-Reference.com](http://www.basketball-reference.com) 
-y [StatHead](https://stathead.com/basketball) con un indicador de color estilo heat-map.
+Basado en la extensión de RotoGrinders BasketballReference.
+
+Extensión para **Google Chrome** y **Mozilla Firefox** que agrega automáticamente la columna "**YH**" (Yahoo Fantasy Points) en las estadísticas de jugadores del sitio [Basketball-Reference.com](http://www.basketball-reference.com) y [StatHead](https://stathead.com/basketball).
+
+**Características:**
+- 🎨 Heat-map con colores adaptativos para visualizar rendimiento
+- 📊 Soporte para múltiples tipos de tablas: GameLogs, Box Scores, Series de Playoffs, Últimos 5 Partidos
+- ⚡ Cálculo automático en tiempo real sin necesidad de recargar
+- 🎯 Bonus de titular (+1) aplicado correctamente en partidos individuales
+- 📱 Compatible con páginas de jugadores, equipos, partidos y temporadas completas
 
 ### Modo de instalación:
 
@@ -27,22 +34,39 @@ y [StatHead](https://stathead.com/basketball) con un indicador de color estilo h
 #### Opción 3: Build desde código (Desarrolladores)
 Ver [BUILD_GUIDE.md](BUILD_GUIDE.md) para instrucciones completas de construcción y distribución. 
 
-#### Ejemplos:
-- GameLog de un jugador en una temporada: 
-  - http://www.basketball-reference.com/players/w/whiteha01/gamelog/2015/#pgl_basic::none
-- Box Score de un partido: 
-  - http://www.basketball-reference.com/boxscores/201502060ATL.html
-- Promedios anuales de un jugador: 
-  - http://www.basketball-reference.com/players/j/jordami01.html#per_game::none
-- Promedios temporada 2014-2015 todos los jugadores:
-  - http://www.basketball-reference.com/leagues/NBA_2015_per_game.html
+#### Ejemplos de páginas compatibles:
+- **GameLog** de un jugador en una temporada:
+  - https://www.basketball-reference.com/players/j/jokicni01/gamelog/2025/
+- **Últimos 5 Partidos** en página de jugador:
+  - https://www.basketball-reference.com/players/j/jokicni01.html (ver tabla "Last 5 Games")
+- **Box Score** de un partido:
+  - https://www.basketball-reference.com/boxscores/201502060ATL.html
+- **Series de Playoffs** (con columnas YH y YH/G):
+  - https://www.basketball-reference.com/playoffs/2022-nba-finals-celtics-vs-warriors.html
+- **Promedios anuales** de un jugador:
+  - https://www.basketball-reference.com/players/j/jokicni01.html
+- **Estadísticas de equipo** (Regular Season y Playoffs):
+  - https://www.basketball-reference.com/teams/LAC/2025.html
+- **Promedios temporada actual** todos los jugadores:
+  - https://www.basketball-reference.com/leagues/NBA_2026_per_game.html
 
 
-### Known bugs:
-- [x] ~~Resultado inflado por no saber calcular si un jugador es titular o no.~~ FIXED
-- [x] En el game log anual de un jugador, el valor de "median" es un poco menor que el promedio aritmetico. No revisé (y no entendí bien) esa función. Sin embargo, cuando el jugador jugó los 82 partidos del año, ahi coinciden los valores Median y Promedio per game.
-- [x] ~~En el boxscore de un partido, hay que ignorar el valor en "Team totals", ya que en vez de ser la suma de la columna YH, trata de calcular como si se tratara de un jugador más, y lo ve en el listado de suplentes.~~ FIXED v2.0.0
-- [x] En Per Game de jugadores en una temporada, parece haber 5 puntos extras (ejemplo: http://goo.gl/WLuklH ) ~~ FIXED
+### Características principales (v2.0.17):
+- ✅ **GameLogs**: Calcula YH por partido individual con bonus de titular (+1 por partido iniciado)
+- ✅ **Últimos 5 Partidos**: Tabla "Last 5 Games" con YH para rendimiento reciente
+- ✅ **Box Scores**: YH por jugador en partidos individuales
+- ✅ **Series de Playoffs**: Dos columnas YH (total) y YH/G (promedio por partido)
+- ✅ **Estadísticas de Temporada**: Per Game y Totals (sin bonus de titular)
+- ✅ **Páginas de Equipos**: Soporte para Regular Season y Playoffs
+- ✅ **Código Moderno**: Manifest V3, ES6+, sin dependencias externas
+- ✅ **Colores Adaptativos**: Heat-map con texto legible en fondos oscuros
+
+### Bugs históricos resueltos:
+- [x] ~~Resultado inflado por no saber calcular si un jugador es titular o no.~~ FIXED v2.0.3-2.0.5
+- [x] ~~En el boxscore de un partido, hay que ignorar el valor en "Team totals".~~ FIXED v2.0.0
+- [x] ~~En Per Game parece haber 5 puntos extras.~~ FIXED
+- [x] ~~Game logs no funcionan (problema con columna G y formato de minutos).~~ FIXED v2.0.8-2.0.9
+- [x] ~~Box scores no muestran columna YH.~~ FIXED v2.0.15
 
 ### References:
 - https://rotogrinders.com/pages/rotogrinders-daily-fantasy-browser-extensions-245335
