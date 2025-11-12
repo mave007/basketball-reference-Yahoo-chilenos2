@@ -53,6 +53,7 @@ Ver [BUILD_GUIDE.md](BUILD_GUIDE.md) para instrucciones completas de construcci√
 Agradecimientos a los fantasy GM de Grand Wizzard y cero32 por desarrollo y patches
 
 ### ChangeLog:
+- Version 2.0.14: 20251112 **DEBUG IMPROVEMENT** - Added comprehensive debug logging to processBoxScoreTables() function - Logs now show: URL validation, total tables found, which box score tables are processed, row counts, header additions, player YH calculations, and skip reasons - Helps diagnose issues with box score page processing
 - Version 2.0.13: 20251112 **CRITICAL FIX** - Added playoff table support for team pages - Extension now processes #per_game_stats_post and #totals_stats_post tables - YH column now appears correctly when toggling between Regular Season and Playoffs views on team pages
 - Version 2.0.12: 20251112 **CODE REFACTOR** - Consolidated tier system into single TIER_CONFIG table - All tier thresholds (per-game/totals), background colors, and text colors now defined in one easy-to-edit structure (lines 56-89) - Replaced separate TIER_THRESHOLDS, TIER_COLORS arrays and getTextColor() logic with unified configuration - Much easier to maintain and visualize tier settings
 - Version 2.0.11: 20251112 **UI IMPROVEMENT** - Improved text legibility for dark tier colors - White text now used for darkest blue backgrounds (tiers 0-1) in addition to red/orange backgrounds (tiers 7-10) - Better contrast for low-scoring performances

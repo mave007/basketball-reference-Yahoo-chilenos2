@@ -576,11 +576,20 @@ const processGameLogTables = () => {
  */
 const processBoxScoreTables = () => {
   try {
+    console.log('[chilenos2 YH] Processing box score tables...');
     const url = window.location.pathname;
+    console.log('[chilenos2 YH] Current URL:', url);
 
     // Only run on box score pages
-    if (!url.includes('/boxscores/')) return;
+    if (!url.includes('/boxscores/')) {
+      console.log('[chilenos2 YH] Not a box score page, skipping...');
+      return;
+    }
 
+    const allTables = document.querySelectorAll('table');
+    console.log('[chilenos2 YH] Found', allTables.length, 'total tables');
+
+    let boxScoreTablesFound = 0;
     document.querySelectorAll('table').forEach(table => {
       const tableId = table.getAttribute('id');
 
@@ -589,19 +598,29 @@ const processBoxScoreTables = () => {
         return;
       }
 
+      boxScoreTablesFound++;
+      console.log('[chilenos2 YH] Processing box score table:', tableId);
+
       // Add header
       const headerRow = table.querySelector('thead tr:not(.over_header)');
       if (headerRow) {
         addYHHeader(headerRow);
+        console.log('[chilenos2 YH] Added YH header to', tableId);
+      } else {
+        console.log('[chilenos2 YH] No header row found for', tableId);
       }
 
       // Process rows
       let playerIndex = 0;
       const rows = table.querySelectorAll('tbody tr, tfoot tr');
+      console.log('[chilenos2 YH] Found', rows.length, 'rows in', tableId);
 
-      rows.forEach(row => {
+      rows.forEach((row, index) => {
         // Skip thead rows in tbody
-        if (row.classList.contains('thead')) return;
+        if (row.classList.contains('thead')) {
+          console.log('[chilenos2 YH] Skipping thead row', index);
+          return;
+        }
 
         const statRow = new StatRow(row);
         const games = statRow.getGames();
@@ -613,6 +632,7 @@ const processBoxScoreTables = () => {
           if (playerName === 'Team Totals' || playerName === 'Reserves') {
             row.appendChild(document.createElement('td')); // Add empty cell
             playerIndex = 0; // Reset counter after starters
+            console.log('[chilenos2 YH] Skipping', playerName, 'row');
             return;
           }
 
@@ -624,11 +644,16 @@ const processBoxScoreTables = () => {
           const tier = getTier(yhScore, tierType);
 
           addYHCell(row, yhScore, tier);
+          console.log('[chilenos2 YH] Added YH cell for', playerName, '- YH:', yhScore);
+        } else {
+          console.log('[chilenos2 YH] Skipping row', index, '- games:', games);
         }
       });
     });
+
+    console.log('[chilenos2 YH] Processed', boxScoreTablesFound, 'box score tables');
   } catch (error) {
-    console.error('Failed to process box score tables:', error);
+    console.error('[chilenos2 YH] Failed to process box score tables:', error);
   }
 };
 
