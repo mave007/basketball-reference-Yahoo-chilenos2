@@ -623,9 +623,10 @@ const processBoxScoreTables = () => {
         }
 
         const statRow = new StatRow(row);
-        const games = statRow.getGames();
+        const minutes = statRow.getMinutes();
 
-        if (games > 0) {
+        // Box scores don't have a "G" column - check minutes instead
+        if (minutes > 0) {
           const playerName = statRow.getText('Starters') || statRow.getText('Player');
 
           // Skip team totals and reserves headers
@@ -639,14 +640,13 @@ const processBoxScoreTables = () => {
           playerIndex++;
           const yhScore = statRow.calculateYH(CALC_TYPE.BOXSCORE, playerIndex);
 
-          const minutes = statRow.getMinutes();
           const tierType = minutes > 60 ? TIER_TYPE.TOTALS : TIER_TYPE.PER_GAME;
           const tier = getTier(yhScore, tierType);
 
           addYHCell(row, yhScore, tier);
-          console.log('[chilenos2 YH] Added YH cell for', playerName, '- YH:', yhScore);
+          console.log('[chilenos2 YH] Added YH cell for', playerName, '- YH:', yhScore, 'MP:', minutes);
         } else {
-          console.log('[chilenos2 YH] Skipping row', index, '- games:', games);
+          console.log('[chilenos2 YH] Skipping row', index, '- no minutes played');
         }
       });
     });
