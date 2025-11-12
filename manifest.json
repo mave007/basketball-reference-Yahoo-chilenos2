@@ -3,7 +3,7 @@
 
  "name": "chilenos2 YahooFL - Basketball Reference & StatHead",
  "description": "Show Yahoo FantasyLeague Points next to Player Stat Tables for #chilenos2 2024-25",
- "version": "2.0.5",
+ "version": "2.0.6",
  "icons": { "128": "chilenos2.png" },
  "author": "GrandWizzard / cero32",
 
@@ -11,7 +11,12 @@
   "matches": [
     "https://www.basketball-reference.com/*/*",
     "https://www.basketball-reference.com/*/*/*",
-    "https://stathead.com/*/*"
+    "https://www.basketball-reference.com/*/*/*/*",
+    "https://www.basketball-reference.com/*/*/*/*/*",
+    "https://www.basketball-reference.com/*/*/*/*/*/*",
+    "https://stathead.com/*/*",
+    "https://stathead.com/*/*/*",
+    "https://stathead.com/*/*/*/*"
   ],
   "js": ["baller.js"]
   }
