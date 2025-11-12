@@ -109,7 +109,11 @@ const TABLE_SELECTORS = {
                '#player_game_log_reg tbody tr, #player_game_log_playoffs tbody tr, ' +
                '#player_game_log_post tbody tr',
 
-  boxScoreTables: 'table[id^="box-"][id$="-basic"]'
+  boxScoreTables: 'table[id^="box-"][id$="-basic"]',
+
+  // Series tables use 3-letter team acronyms (GSW, BOS, LAC, etc.)
+  // These tables have both totals and per-game columns
+  seriesTables: /^[A-Z]{3}$/
 };
 
 // ============================================================================
@@ -572,6 +576,108 @@ const processGameLogTables = () => {
 };
 
 /**
+ * Process series tables (playoff series with team acronym IDs)
+ * These tables show both totals and per-game stats
+ */
+const processSeriesTables = () => {
+  try {
+    console.log('[chilenos2 YH] Processing series tables...');
+
+    let seriesTablesFound = 0;
+    document.querySelectorAll('table').forEach(table => {
+      const tableId = table.getAttribute('id');
+
+      // Check if this is a series table (3-letter team acronym)
+      if (!tableId || !TABLE_SELECTORS.seriesTables.test(tableId)) {
+        return;
+      }
+
+      // Skip advanced stats tables (e.g., GSWadvanced, BOSadvanced)
+      if (tableId.includes('advanced')) {
+        return;
+      }
+
+      seriesTablesFound++;
+      console.log('[chilenos2 YH] Processing series table:', tableId);
+
+      // Add headers - need TWO columns: "YH" and "YH/G"
+      const headerRow = table.querySelector('thead tr:not(.over_header)');
+      if (headerRow) {
+        // Add YH Totals header
+        const yhHeader = document.createElement('th');
+        yhHeader.setAttribute('data-stat', 'yh');
+        yhHeader.setAttribute('scope', 'col');
+        yhHeader.setAttribute('class', 'poptip center');
+        yhHeader.setAttribute('data-tip', 'Yahoo Fantasy Points (Totals)');
+        yhHeader.textContent = 'YH';
+        headerRow.appendChild(yhHeader);
+
+        // Add YH Per Game header
+        const yhPerGameHeader = document.createElement('th');
+        yhPerGameHeader.setAttribute('data-stat', 'yh_per_g');
+        yhPerGameHeader.setAttribute('scope', 'col');
+        yhPerGameHeader.setAttribute('class', 'poptip center');
+        yhPerGameHeader.setAttribute('data-tip', 'Yahoo Fantasy Points Per Game');
+        yhPerGameHeader.textContent = 'YH/G';
+        headerRow.appendChild(yhPerGameHeader);
+
+        console.log('[chilenos2 YH] Added YH and YH/G headers to', tableId);
+      } else {
+        console.log('[chilenos2 YH] No header row found for', tableId);
+      }
+
+      // Process rows
+      const rows = table.querySelectorAll('tbody tr');
+      console.log('[chilenos2 YH] Found', rows.length, 'rows in', tableId);
+
+      rows.forEach((row, index) => {
+        // Skip thead rows in tbody
+        if (row.classList.contains('thead')) {
+          console.log('[chilenos2 YH] Skipping thead row', index);
+          return;
+        }
+
+        const statRow = new StatRow(row);
+        const games = statRow.getGames();
+
+        if (games > 0) {
+          const playerName = statRow.getText('Player');
+
+          // Skip team totals rows
+          if (playerName === 'Team Totals') {
+            // Add empty cells for team totals
+            row.appendChild(document.createElement('td'));
+            row.appendChild(document.createElement('td'));
+            console.log('[chilenos2 YH] Skipping Team Totals row');
+            return;
+          }
+
+          // Calculate YH from totals (no starter bonus for series totals)
+          const yhTotal = statRow.calculateYH(CALC_TYPE.TOTALS, 0);
+          const yhPerGame = (yhTotal / games).toFixed(2);
+
+          // Add YH Totals cell
+          const tierTotals = getTier(yhTotal, TIER_TYPE.TOTALS);
+          addYHCell(row, yhTotal, tierTotals);
+
+          // Add YH Per Game cell
+          const tierPerGame = getTier(yhPerGame, TIER_TYPE.PER_GAME);
+          addYHCell(row, yhPerGame, tierPerGame);
+
+          console.log('[chilenos2 YH] Added YH cells for', playerName, '- YH:', yhTotal, 'YH/G:', yhPerGame, 'Games:', games);
+        } else {
+          console.log('[chilenos2 YH] Skipping row', index, '- games:', games);
+        }
+      });
+    });
+
+    console.log('[chilenos2 YH] Processed', seriesTablesFound, 'series tables');
+  } catch (error) {
+    console.error('[chilenos2 YH] Failed to process series tables:', error);
+  }
+};
+
+/**
  * Process box score tables
  */
 const processBoxScoreTables = () => {
@@ -671,6 +777,7 @@ const initialize = () => {
 
     processPerGameTables();
     processGameLogTables();
+    processSeriesTables();
     processBoxScoreTables();
 
     console.log('[chilenos2 YH] Initialization complete');
