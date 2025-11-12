@@ -272,13 +272,13 @@ class StatRow {
           break;
 
         case CALC_TYPE.PLAYER_GAMELOG:
-          // In game logs, check if player started
-          starter = isNaN(startedGames) ? 0 : startedGames;
+          // In game logs, check if player started that specific game
+          starter = isNaN(startedGames) || startedGames === 0 ? 0 : 1;
           break;
 
         case CALC_TYPE.PER_GAME:
-          // For per-game stats, use starter percentage
-          starter = totalGames > 0 ? startedGames / totalGames : 0;
+          // For per-game stats, NO starter bonus (it's already averaged into per-game stats)
+          starter = 0;
           break;
 
         case CALC_TYPE.TOTALS:

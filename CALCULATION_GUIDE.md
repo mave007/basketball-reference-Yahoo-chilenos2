@@ -35,7 +35,7 @@ The extension handles four different calculation contexts:
 
 **Behavior:**
 - Stats in table are **already per-game averages**
-- Starter bonus = GS / G (percentage of games started, typically 0 to 1)
+- Starter bonus = **0** (NO starter bonus for per-game stats!)
 - Triple-double = +3 if averages constitute triple-double (≥10 in 3+ categories)
 - **Result:** Per-game YH score
 - **Division:** By 1 (stats already per-game)
@@ -43,9 +43,11 @@ The extension handles four different calculation contexts:
 **Example:**
 ```
 Player: 20.0 PPG, 8.0 APG, 6.0 RPG in 10 games (started 10)
-- Starter: 10/10 = 1.0
-- YH per game = 34.86
+- Starter: 0 (no bonus for per-game)
+- YH per game = 33.86
 ```
+
+**Important:** The starter bonus only applies to **season totals**, not per-game averages!
 
 ### 2. Season Totals Tables
 
@@ -109,10 +111,13 @@ Example:
 ### Q: How is the starter bonus calculated differently?
 
 **A:**
-- **Per-Game tables:** Starter bonus = GS / G (percentage, e.g., 1.0 if started all games)
-  - If started 9/9 games: +1.0 points per game
+- **Per-Game tables:** Starter bonus = **0** (NO bonus)
+  - Starter status doesn't affect per-game scores
+  - The stats are already averaged, so no additional bonus
 - **Totals tables:** Starter bonus = GS (count, e.g., 9 if started 9 games)
   - If started 9/9 games: +9 points total for season
+- **Game Logs:** Starter bonus = 1 if started that game, 0 if bench
+- **Box Scores:** Starter bonus = 1 for first 5 players, 0 for bench
 
 ### Q: Why doesn't Team Totals show a YH score?
 
@@ -147,30 +152,30 @@ To manually verify a calculation:
 
 ### Example 1: James Harden - Per Game
 
-Stats (averages):
+Stats (averages from LAC 2025-26):
 - G: 9, GS: 9
-- FG: 6.0, FGA: 13.0
-- FT: 7.0, FTA: 8.0
-- 3P: 2.5, 3PA: 7.0
-- PTS: 21.5, ORB: 0.5, DRB: 5.5
-- AST: 8.0, STL: 1.5, BLK: 0.5, TOV: 3.0
+- FG: 7.11, FGA: 15.56
+- FT: 5.56, FTA: 6.11
+- 3P: 3.67, 3PA: 9.33
+- PTS: 23.44, ORB: 0.44, DRB: 4.78
+- AST: 9.33, STL: 1.0, BLK: 0.33, TOV: 4.22
 
 Calculation:
 ```
-Starter: 9/9 = 1.0
-= (1.0 × 1)
-  + (6.0 × 1) - (13.0 × 0.45)
-  + (7.0 × 1) - (8.0 × 0.75)
-  + (2.5 × 2) - (7.0 × 0.75)
-  + (21.5 × 0.5)
-  + (0.5 × 1.7) + (5.5 × 1.5)
-  + (8.0 × 2)
-  + (1.5 × 2.5)
-  + (0.5 × 2.5)
-  - (3.0 × 2)
+Starter: 0  (NO starter bonus for per-game!)
+= (0 × 1)
+  + (7.11 × 1) - (15.56 × 0.45)
+  + (5.56 × 1) - (6.11 × 0.75)
+  + (3.67 × 2) - (9.33 × 0.75)
+  + (23.44 × 0.5)
+  + (0.44 × 1.7) + (4.78 × 1.5)
+  + (9.33 × 2)
+  + (1.0 × 2.5)
+  + (0.33 × 2.5)
+  - (4.22 × 2)
   + (0 × 3)  // No triple-double average
-= 1.0 + 6.0 - 5.85 + 7.0 - 6.0 + 5.0 - 5.25 + 10.75 + 0.85 + 8.25 + 16.0 + 3.75 + 1.25 - 6.0 + 0
-= 34.86 per game
+= 0 + 7.11 - 7.00 + 5.56 - 4.58 + 7.33 - 7.00 + 11.72 + 0.76 + 7.17 + 18.67 + 2.5 + 0.83 - 8.44 + 0
+= 34.86 per game ✓
 ```
 
 ### Example 2: James Harden - Totals
