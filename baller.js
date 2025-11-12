@@ -244,8 +244,21 @@ class StatRow {
 
   /**
    * Get minutes played
+   * Handles both numeric values (totals/per-game) and time strings (game logs: "MM:SS")
    */
   getMinutes() {
+    const mpText = this.getText('MP');
+    if (!mpText) return 0;
+
+    // Check if it's a time string (contains ':')
+    if (mpText.includes(':')) {
+      const parts = mpText.split(':');
+      const minutes = parseInt(parts[0], 10) || 0;
+      const seconds = parseInt(parts[1], 10) || 0;
+      return minutes + (seconds / 60); // Convert to decimal minutes
+    }
+
+    // Otherwise treat as numeric value
     return this.getValue('MP');
   }
 
