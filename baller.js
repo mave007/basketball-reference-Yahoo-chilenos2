@@ -57,7 +57,8 @@ const TABLE_SELECTORS = {
            '#totals_stats thead tr, #per_game thead tr, #per_game_stats thead tr, ' +
            '#projection thead tr, #playoffs_per_game thead tr, #stats_games thead tr, ' +
            '#pgl_basic thead tr, #pgl_basic_playoffs thead tr, ' +
-           '#player_game_log_reg thead tr, #player_game_log_playoffs thead tr',
+           '#player_game_log_reg thead tr, #player_game_log_playoffs thead tr, ' +
+           '#player_game_log_post thead tr',
 
   perGameRows: '#playoffs_totals tbody tr, #totals tbody tr, #totals_stats tbody tr, ' +
                '#per_game tbody tr, #per_game_stats tbody tr, #projection tbody tr, ' +
@@ -65,7 +66,8 @@ const TABLE_SELECTORS = {
                '#playoffs_per_game tfoot tr',
 
   gameLogRows: '#pgl_basic tbody tr, #pgl_basic_playoffs tbody tr, ' +
-               '#player_game_log_reg tbody tr, #player_game_log_playoffs tbody tr',
+               '#player_game_log_reg tbody tr, #player_game_log_playoffs tbody tr, ' +
+               '#player_game_log_post tbody tr',
 
   boxScoreTables: 'table[id^="box-"][id$="-basic"]'
 };
