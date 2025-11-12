@@ -448,19 +448,29 @@ const processGameLogTables = () => {
         return;
       }
 
-      const statRow = new StatRow(row);
-      const games = statRow.getGames();
+      // Skip "Inactive" or "Did Not Play" rows (check for colspan in is_starter cell)
+      const gsCell = row.querySelector('td[data-stat="is_starter"]');
+      if (gsCell && gsCell.hasAttribute('colspan')) {
+        console.log('[chilenos2 YH] Skipping inactive row', index);
+        return;
+      }
 
-      if (games > 0) {
+      const statRow = new StatRow(row);
+
+      // In game logs, each row is one game, so check for valid MP instead of G column
+      const minutes = statRow.getMinutes();
+
+      if (minutes > 0) {
         const yhScore = statRow.calculateYH(CALC_TYPE.PLAYER_GAMELOG, 0);
         yhValues.push(yhScore);
-        console.log('[chilenos2 YH] Row', index, '- YH:', yhScore, 'Games:', games);
+        console.log('[chilenos2 YH] Row', index, '- YH:', yhScore, 'MP:', minutes);
 
-        const minutes = statRow.getMinutes();
         const tierType = minutes > 60 ? TIER_TYPE.TOTALS : TIER_TYPE.PER_GAME;
         const tier = getTier(yhScore, tierType);
 
         addYHCell(row, yhScore, tier);
+      } else {
+        console.log('[chilenos2 YH] Skipping row', index, 'with no minutes');
       }
     });
 

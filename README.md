@@ -53,6 +53,7 @@ Ver [BUILD_GUIDE.md](BUILD_GUIDE.md) para instrucciones completas de construcciÃ
 Agradecimientos a los fantasy GM de Grand Wizzard y cero32 por desarrollo y patches
 
 ### ChangeLog:
+- Version 2.0.8: 20251112 **CRITICAL FIX** - Fixed game log row detection - Game logs don't have a "G" (games) column, changed to check minutes > 0 instead - Now correctly processes all game log rows and calculates YH scores
 - Version 2.0.7: 20251112 **CRITICAL FIX** - Updated table selectors for Basketball-Reference's new game log table IDs (changed from 'pgl_basic' to 'player_game_log_reg') - Extension now properly detects and processes game log tables
 - Version 2.0.6: 20251112 **CRITICAL FIX** - Added URL match patterns for player game logs (4-6 path segments) - Extension now properly loads on game log pages like /players/h/hardeja01/gamelog/2026/
 - Version 2.0.5: 20251112 Fixed game log starter detection - Now correctly handles Basketball-Reference's format change where started games show "*" instead of "1"
