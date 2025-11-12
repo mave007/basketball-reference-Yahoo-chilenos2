@@ -53,6 +53,7 @@ Ver [BUILD_GUIDE.md](BUILD_GUIDE.md) para instrucciones completas de construcci√
 Agradecimientos a los fantasy GM de Grand Wizzard y cero32 por desarrollo y patches
 
 ### ChangeLog:
+- Version 2.0.7: 20251112 **CRITICAL FIX** - Updated table selectors for Basketball-Reference's new game log table IDs (changed from 'pgl_basic' to 'player_game_log_reg') - Extension now properly detects and processes game log tables
 - Version 2.0.6: 20251112 **CRITICAL FIX** - Added URL match patterns for player game logs (4-6 path segments) - Extension now properly loads on game log pages like /players/h/hardeja01/gamelog/2026/
 - Version 2.0.5: 20251112 Fixed game log starter detection - Now correctly handles Basketball-Reference's format change where started games show "*" instead of "1"
 - Version 2.0.4: 20251112 Fixed double-counting starter bonus in Totals - Both Per-game and Totals tables now correctly have NO starter bonus (bonus only applied at individual game level in game logs and box scores)

@@ -3,7 +3,7 @@
 
 # Extension metadata
 EXTENSION_NAME = basketball-reference-Yahoo-chilenos2
-VERSION = 2.0.6
+VERSION = 2.0.7
 BUILD_DIR = build
 DIST_DIR = dist
 ZIP_FILE = $(DIST_DIR)/$(EXTENSION_NAME)-v$(VERSION).zip
