@@ -129,9 +129,11 @@ const getColorForTier = (tier) => {
 
 /**
  * Get text color based on background tier
+ * Use white text for dark backgrounds (darkest blues and reds)
  */
 const getTextColor = (tier) => {
-  return tier > 6 ? '#ffffff' : '#000000';
+  // White text for darkest blues (tier 0-1) and reds/oranges (tier > 6)
+  return (tier <= 1 || tier > 6) ? '#ffffff' : '#000000';
 };
 
 // ============================================================================
