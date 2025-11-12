@@ -76,7 +76,7 @@ const TIER_CONFIG = [
   { minPerGame: 31, maxPerGame: 36,  minTotals: 2400, maxTotals: 2700, bgColor: '#fee090', textColor: '#000000' },
 
   // Tier 7: Good - Orange
-  { minPerGame: 36, maxPerGame: 40,  minTotals: 2700, maxTotals: 3000, bgColor: '#fdae61', textColor: '#ffffff' },
+  { minPerGame: 36, maxPerGame: 40,  minTotals: 2700, maxTotals: 3000, bgColor: '#fdae61', textColor: '#000000' },
 
   // Tier 8: Very good - Dark orange
   { minPerGame: 40, maxPerGame: 45,  minTotals: 3000, maxTotals: 3200, bgColor: '#f46d43', textColor: '#ffffff' },
