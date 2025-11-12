@@ -200,7 +200,8 @@ class StatRow {
       const index = this.getIndex(category);
       if (index === -1) return 0;
 
-      const cells = this.row.querySelectorAll('td');
+      // Query both th and td to match header structure (first column is often <th>)
+      const cells = this.row.querySelectorAll('th, td');
       const cell = cells[index];
 
       if (!cell) return 0;
@@ -221,7 +222,8 @@ class StatRow {
       const index = this.getIndex(category);
       if (index === -1) return '';
 
-      const cells = this.row.querySelectorAll('td');
+      // Query both th and td to match header structure (first column is often <th>)
+      const cells = this.row.querySelectorAll('th, td');
       const cell = cells[index];
 
       return cell ? cell.textContent.trim() : '';
@@ -296,14 +298,20 @@ class StatRow {
       // Check for triple-double
       let tripleDouble = 0;
       if (calcType === CALC_TYPE.TOTALS) {
-        // For totals, check if per-game averages constitute a triple-double
-        // We don't have game-by-game data, so this is an approximation
-        const totalGames = this.getGames();
-        if (totalGames > 0) {
-          const statsPerGame = [pts/totalGames, ast/totalGames, stl/totalGames, blk/totalGames, trb/totalGames];
-          const doubles = statsPerGame.filter(isDouble).length;
-          // If they average a triple-double, give bonus once for the season
-          tripleDouble = doubles >= 3 ? 1 : 0;
+        // For totals, try to read actual triple-double count from table
+        const tdCount = this.getValue('Trp-Dbl');
+        if (tdCount > 0) {
+          // Use actual triple-double count from table (each TD = +3 points)
+          tripleDouble = tdCount;
+        } else {
+          // Fallback: check if per-game averages constitute a triple-double
+          const totalGames = this.getGames();
+          if (totalGames > 0) {
+            const statsPerGame = [pts/totalGames, ast/totalGames, stl/totalGames, blk/totalGames, trb/totalGames];
+            const doubles = statsPerGame.filter(isDouble).length;
+            // If they average a triple-double, give bonus once for the season
+            tripleDouble = doubles >= 3 ? 1 : 0;
+          }
         }
       } else {
         // For per-game, divide by games first
