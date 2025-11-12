@@ -53,6 +53,7 @@ Ver [BUILD_GUIDE.md](BUILD_GUIDE.md) para instrucciones completas de construcciÃ
 Agradecimientos a los fantasy GM de Grand Wizzard y cero32 por desarrollo y patches
 
 ### ChangeLog:
+- Version 2.0.17: 20251112 **NEW FEATURE** - Added "Last 5 Games" table support - Detects table with id="last5" on player pages - Processes it like game logs with individual game YH calculations - Includes starter bonus (+1 for games started) - Appears on player pages showing recent performance
 - Version 2.0.16: 20251112 **NEW FEATURE** - Added series tables support - Detects tables with 3-letter team acronyms (GSW, BOS, LAC, etc.) - Adds TWO YH columns: "YH" (totals across all games in series) and "YH/G" (per-game average = YH Ã· Games) - Perfect for playoff series analysis - Works on pages like NBA Finals series stats
 - Version 2.0.15: 20251112 **CRITICAL FIX** - Fixed box score row detection - Box scores don't have a "G" (games) column, changed to check minutes > 0 instead (same fix as v2.0.8 for game logs) - YH column now appears correctly on box score pages - NOW BOX SCORES ACTUALLY WORK!
 - Version 2.0.14: 20251112 **DEBUG IMPROVEMENT** - Added comprehensive debug logging to processBoxScoreTables() function - Logs now show: URL validation, total tables found, which box score tables are processed, row counts, header additions, player YH calculations, and skip reasons - Helps diagnose issues with box score page processing

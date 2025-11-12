@@ -96,7 +96,7 @@ const TABLE_SELECTORS = {
            '#projection thead tr, #playoffs_per_game thead tr, #stats_games thead tr, ' +
            '#pgl_basic thead tr, #pgl_basic_playoffs thead tr, ' +
            '#player_game_log_reg thead tr, #player_game_log_playoffs thead tr, ' +
-           '#player_game_log_post thead tr',
+           '#player_game_log_post thead tr, #last5 thead tr',
 
   perGameRows: '#playoffs_totals tbody tr, #totals tbody tr, #totals_stats tbody tr, ' +
                '#totals_stats_post tbody tr, ' +
@@ -107,7 +107,7 @@ const TABLE_SELECTORS = {
 
   gameLogRows: '#pgl_basic tbody tr, #pgl_basic_playoffs tbody tr, ' +
                '#player_game_log_reg tbody tr, #player_game_log_playoffs tbody tr, ' +
-               '#player_game_log_post tbody tr',
+               '#player_game_log_post tbody tr, #last5 tbody tr',
 
   boxScoreTables: 'table[id^="box-"][id$="-basic"]',
 
