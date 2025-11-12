@@ -1,2 +1,16 @@
+# macOS
 .DS_Store
+
+# Private keys
 *.pem
+
+# Build artifacts
+dist/
+build/
+*.crx
+*.zip
+web-ext-artifacts/
+
+# Backup files
+*~
+*.old

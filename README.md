@@ -5,14 +5,27 @@ Extension para Google Chrome y Mozilla Firefox que agrega columna "YH" en los st
 y [StatHead](https://stathead.com/basketball) con un indicador de color estilo heat-map.
 
 ### Modo de instalación:
-- Bajar la ultima version del CRX desde https://github.com/mave007/basketball-reference-Yahoo-chilenos2/blob/master/basketball-reference-Yahoo-chilenos2.crx?raw=true
-- Si usas Google Chrome:
-  - Activar el modo developer en [chrome://extensions](chrome://extensions/)
-  - Arrastrar el `CRX` a esa misma carpeta.
-- Si usas Mozilla Firefox:
-  - Abrir `about:debugging#/runtime/this-firefox` 
-  - Click en "Load Temporary Add-on..."
-  - Instalar el `CRX` 
+
+#### Opción 1: Chrome Web Store (Recomendado)
+- **Próximamente:** La extensión estará disponible en Chrome Web Store
+- Instalación con un click y actualizaciones automáticas
+
+#### Opción 2: Desarrollo/Testing (Mientras tanto)
+- Si usas **Google Chrome**:
+  1. Descarga o clona este repositorio
+  2. Abre `chrome://extensions/`
+  3. Activa "Modo de desarrollador" (Developer mode)
+  4. Click en "Cargar extensión sin empaquetar" (Load unpacked)
+  5. Selecciona la carpeta del repositorio
+
+- Si usas **Mozilla Firefox**:
+  1. Descarga o clona este repositorio
+  2. Abre `about:debugging#/runtime/this-firefox`
+  3. Click en "Cargar complemento temporal..." (Load Temporary Add-on)
+  4. Selecciona el archivo `manifest.json`
+
+#### Opción 3: Build desde código (Desarrolladores)
+Ver [BUILD_GUIDE.md](BUILD_GUIDE.md) para instrucciones completas de construcción y distribución. 
 
 #### Ejemplos:
 - GameLog de un jugador en una temporada: 
