@@ -53,6 +53,7 @@ Ver [BUILD_GUIDE.md](BUILD_GUIDE.md) para instrucciones completas de construcci√
 Agradecimientos a los fantasy GM de Grand Wizzard y cero32 por desarrollo y patches
 
 ### ChangeLog:
+- Version 2.0.1: 20251112 Fixed critical calculation bug - Totals now show season total YH score (not per-game average), starter bonus now correctly uses GS count for totals
 - Version 2.0.0: 20251112 Major refactor - Manifest V3, removed jQuery dependency, modernized to ES6+, added configuration system, improved error handling, fixed Team Totals bug, optimized performance with caching
 - Version 1.5.0: 20210304 A√±adiendo soporte para STATHEAD e instrucciones para Firefox
 - Version 1.4.1: 20191219 Ajustando HeatMap de colores

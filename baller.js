@@ -280,9 +280,9 @@ class StatRow {
           break;
 
         case CALC_TYPE.TOTALS:
-          // For totals, just check if started
-          starter = startedGames > 0 ? 1 : 0;
-          games = totalGames || 1;
+          // For totals, use number of games started (each start = +1 point)
+          starter = startedGames;
+          games = 1; // Don't divide - we want total season score, not per-game average
           break;
       }
 
@@ -296,9 +296,15 @@ class StatRow {
       // Check for triple-double
       let tripleDouble = 0;
       if (calcType === CALC_TYPE.TOTALS) {
-        // For totals, check raw values
-        const doubles = [pts, ast, stl, blk, trb].filter(isDouble).length;
-        tripleDouble = doubles >= 3 ? 1 : 0;
+        // For totals, check if per-game averages constitute a triple-double
+        // We don't have game-by-game data, so this is an approximation
+        const totalGames = this.getGames();
+        if (totalGames > 0) {
+          const statsPerGame = [pts/totalGames, ast/totalGames, stl/totalGames, blk/totalGames, trb/totalGames];
+          const doubles = statsPerGame.filter(isDouble).length;
+          // If they average a triple-double, give bonus once for the season
+          tripleDouble = doubles >= 3 ? 1 : 0;
+        }
       } else {
         // For per-game, divide by games first
         const statsPerGame = [pts, ast, stl, blk, trb].map(s => s / games);

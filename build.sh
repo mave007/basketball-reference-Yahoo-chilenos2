@@ -5,7 +5,7 @@
 set -e
 
 EXTENSION_NAME="basketball-reference-Yahoo-chilenos2"
-VERSION="2.0.0"
+VERSION="2.0.1"
 OUTPUT_DIR="dist"
 ZIP_FILE="${OUTPUT_DIR}/${EXTENSION_NAME}-v${VERSION}.zip"
 
