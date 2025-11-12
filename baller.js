@@ -389,8 +389,12 @@ const addYHCell = (row, value, tier) => {
  */
 const processPerGameTables = () => {
   try {
+    console.log('[chilenos2 YH] Processing per-game/totals tables...');
     // Add headers
-    document.querySelectorAll(TABLE_SELECTORS.headers).forEach(header => {
+    const headers = document.querySelectorAll(TABLE_SELECTORS.headers);
+    console.log('[chilenos2 YH] Found', headers.length, 'headers');
+    headers.forEach((header, index) => {
+      console.log('[chilenos2 YH] Adding YH header to table', index);
       addYHHeader(header);
     });
 
@@ -430,11 +434,19 @@ const processPerGameTables = () => {
  */
 const processGameLogTables = () => {
   try {
-    const yhValues = [];
+    console.log('[chilenos2 YH] Processing game log tables...');
+    console.log('[chilenos2 YH] Game log selector:', TABLE_SELECTORS.gameLogRows);
 
-    document.querySelectorAll(TABLE_SELECTORS.gameLogRows).forEach(row => {
+    const yhValues = [];
+    const rows = document.querySelectorAll(TABLE_SELECTORS.gameLogRows);
+    console.log('[chilenos2 YH] Found', rows.length, 'game log rows');
+
+    rows.forEach((row, index) => {
       // Skip thead rows
-      if (row.classList.contains('thead')) return;
+      if (row.classList.contains('thead')) {
+        console.log('[chilenos2 YH] Skipping thead row', index);
+        return;
+      }
 
       const statRow = new StatRow(row);
       const games = statRow.getGames();
@@ -442,6 +454,7 @@ const processGameLogTables = () => {
       if (games > 0) {
         const yhScore = statRow.calculateYH(CALC_TYPE.PLAYER_GAMELOG, 0);
         yhValues.push(yhScore);
+        console.log('[chilenos2 YH] Row', index, '- YH:', yhScore, 'Games:', games);
 
         const minutes = statRow.getMinutes();
         const tierType = minutes > 60 ? TIER_TYPE.TOTALS : TIER_TYPE.PER_GAME;
@@ -453,9 +466,11 @@ const processGameLogTables = () => {
 
     // Add summary row with stats
     if (yhValues.length > 0) {
+      console.log('[chilenos2 YH] Adding summary row. YH values:', yhValues);
       // Try both old and new table IDs
       const tbody = document.querySelector('#pgl_basic tbody, #player_game_log_reg tbody');
       if (tbody) {
+        console.log('[chilenos2 YH] Found tbody, adding summary row');
         const summaryRow = document.createElement('tr');
         summaryRow.style.backgroundColor = '#00FF00';
         summaryRow.innerHTML = `
@@ -470,10 +485,14 @@ const processGameLogTables = () => {
           <td>${Math.max(...yhValues)}</td>
         `;
         tbody.appendChild(summaryRow);
+      } else {
+        console.warn('[chilenos2 YH] Could not find tbody for summary row');
       }
+    } else {
+      console.log('[chilenos2 YH] No YH values to summarize');
     }
   } catch (error) {
-    console.error('Failed to process game log tables:', error);
+    console.error('[chilenos2 YH] Failed to process game log tables:', error);
   }
 };
 
@@ -547,17 +566,25 @@ const processBoxScoreTables = () => {
  */
 const initialize = () => {
   try {
+    console.log('[chilenos2 YH] Extension loaded! URL:', window.location.pathname);
+    console.log('[chilenos2 YH] Document ready state:', document.readyState);
+
     processPerGameTables();
     processGameLogTables();
     processBoxScoreTables();
+
+    console.log('[chilenos2 YH] Initialization complete');
   } catch (error) {
-    console.error('Failed to initialize Yahoo Fantasy League extension:', error);
+    console.error('[chilenos2 YH] Failed to initialize:', error);
   }
 };
 
 // Run when DOM is ready
+console.log('[chilenos2 YH] Content script loaded');
 if (document.readyState === 'loading') {
+  console.log('[chilenos2 YH] Waiting for DOMContentLoaded...');
   document.addEventListener('DOMContentLoaded', initialize);
 } else {
+  console.log('[chilenos2 YH] DOM already ready, initializing now...');
   initialize();
 }
