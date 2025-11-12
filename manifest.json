@@ -1,19 +1,19 @@
 {
- "manifest_version": 2,
+ "manifest_version": 3,
 
  "name": "chilenos2 YahooFL - Basketball Reference & StatHead",
- "description": "Show Yahoo FantasyLeague Points next to Player Stat Tables for #chilenos2 2021-22",
- "version": "1.6.0",
+ "description": "Show Yahoo FantasyLeague Points next to Player Stat Tables for #chilenos2 2024-25",
+ "version": "2.0.0",
  "icons": { "128": "chilenos2.png" },
  "author": "GrandWizzard / cero32",
 
  "content_scripts": [ {
-  "matches": ["*://www.basketball-reference.com/*/*/*","*://www.basketball-reference.com/*/*","*://basketball-reference.com/*/*","https://stathead.com/*/*"],
-      "js": ["jquery-3.6.0.min.js", "baller.js"]
+  "matches": [
+    "https://www.basketball-reference.com/*/*",
+    "https://www.basketball-reference.com/*/*/*",
+    "https://stathead.com/*/*"
+  ],
+  "js": ["baller.js"]
   }
- ],
-
- "web_accessible_resources": [
-      "jquery-3.6.0.min.map"
  ]
 }
