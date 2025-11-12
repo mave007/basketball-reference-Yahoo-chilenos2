@@ -53,7 +53,8 @@ Ver [BUILD_GUIDE.md](BUILD_GUIDE.md) para instrucciones completas de construcci√
 Agradecimientos a los fantasy GM de Grand Wizzard y cero32 por desarrollo y patches
 
 ### ChangeLog:
-- Version 2.0.3: 20251112 Fixed starter bonus bug - Per-game tables now correctly have NO starter bonus (only Totals tables add +1 per game started), fixed game log starter detection
+- Version 2.0.4: 20251112 Fixed double-counting starter bonus in Totals - Both Per-game and Totals tables now correctly have NO starter bonus (bonus only applied at individual game level in game logs and box scores)
+- Version 2.0.3: 20251112 Fixed starter bonus bug - Per-game tables now correctly have NO starter bonus, fixed game log starter detection
 - Version 2.0.2: 20251112 Fixed critical column indexing bug - getValue/getText now correctly query both th and td elements to match header structure, added support for reading actual triple-double counts from Totals table
 - Version 2.0.1: 20251112 Fixed critical calculation bug - Totals now show season total YH score (not per-game average), starter bonus now correctly uses GS count for totals
 - Version 2.0.0: 20251112 Major refactor - Manifest V3, removed jQuery dependency, modernized to ES6+, added configuration system, improved error handling, fixed Team Totals bug, optimized performance with caching

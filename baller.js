@@ -282,8 +282,8 @@ class StatRow {
           break;
 
         case CALC_TYPE.TOTALS:
-          // For totals, use number of games started (each start = +1 point)
-          starter = startedGames;
+          // For totals, NO starter bonus (stats are summed from individual games that already had the bonus)
+          starter = 0;
           games = 1; // Don't divide - we want total season score, not per-game average
           break;
       }

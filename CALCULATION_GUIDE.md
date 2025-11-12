@@ -54,24 +54,22 @@ Player: 20.0 PPG, 8.0 APG, 6.0 RPG in 10 games (started 10)
 **Page Example:** `https://www.basketball-reference.com/leagues/NBA_2025_totals.html`
 
 **Behavior:**
-- Stats in table are **season totals** (all games combined)
-- Starter bonus = GS (number of games started)
-- Triple-double = +3 if per-game averages constitute triple-double
+- Stats in table are **season totals** (all games combined, summed from individual games)
+- Starter bonus = **0** (NO bonus - already included in individual game stats)
+- Triple-double = Read from "Trp-Dbl" column if available, or +3 if per-game averages constitute triple-double
 - **Result:** Total season YH score
 - **Division:** By 1 (we want total, not average!)
 
 **Example:**
 ```
-Player: 200 total PTS, 80 total AST, 60 total REB in 10 games (started 10)
-- Stats are totals: 200 PTS, 80 AST, etc.
-- Starter: 10 games started = 10 × 1 = +10 points
+Player: 211 total PTS, 84 total AST, 47 total REB in 9 games (started 9)
+- Stats are totals: 211 PTS, 84 AST, etc.
+- Starter: 0 (NO bonus - individual games already had +1 each for starting)
+- Triple-doubles: 1 (read from Trp-Dbl column) = +3 points
 - YH total = 314.55 for the season
 ```
 
-**Key Difference:**
-- Per-game averages 34.86 → multiply by games: 34.86 × 9 = 313.74
-- But starter bonus is different: per-game uses starter percentage, totals uses count
-- Total season score accounts for this: ~314.55
+**Important:** Totals are the SUM of individual game scores. The starter bonus (+1 per game started) was already applied to each individual game, so we don't add it again to the season total!
 
 ### 3. Player Game Log
 
@@ -112,12 +110,16 @@ Example:
 
 **A:**
 - **Per-Game tables:** Starter bonus = **0** (NO bonus)
-  - Starter status doesn't affect per-game scores
-  - The stats are already averaged, so no additional bonus
-- **Totals tables:** Starter bonus = GS (count, e.g., 9 if started 9 games)
-  - If started 9/9 games: +9 points total for season
-- **Game Logs:** Starter bonus = 1 if started that game, 0 if bench
-- **Box Scores:** Starter bonus = 1 for first 5 players, 0 for bench
+  - Stats are already averaged, no additional bonus needed
+- **Totals tables:** Starter bonus = **0** (NO bonus)
+  - Stats are summed from individual games that already had the bonus
+  - Adding it again would be double-counting!
+- **Game Logs:** Starter bonus = **1** if started that specific game, **0** if bench
+  - This is where the actual +1 bonus is applied
+- **Box Scores:** Starter bonus = **1** for first 5 players (starters), **0** for bench
+  - This is where the actual +1 bonus is applied
+
+**Key Insight:** The +1 starter bonus is only applied at the **individual game level** (game logs and box scores). Season totals and per-game averages are derived from these game-level calculations, so they don't get an additional bonus.
 
 ### Q: Why doesn't Team Totals show a YH score?
 
